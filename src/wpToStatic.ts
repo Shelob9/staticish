@@ -21,7 +21,7 @@ type contentArgs = {
 };
 
 
-
+//REMOVE THIS USELESS ABSTRACTION
 async function getContent(args: contentArgs) : Promise<Array<Post>>{
     const {
         endpoint,
@@ -56,11 +56,13 @@ async function getContent(args: contentArgs) : Promise<Array<Post>>{
     });
 }
 
+type savedFilePath = {path:String};
 
-function jsonStaticFilePath( post: Post,wpJsonPath: string){
-    return `${wpJsonPath.replace(/\/$/, "")}/${post.type}/${post.id}.json`
-}
-async function writeToJSON(post: Post,wpJsonPath: string ){
+async function writeToJSON(post: Post,wpJsonPath: string ) : Promise<savedFilePath>{
+    function jsonStaticFilePath( post: Post,wpJsonPath: string){
+        return `${wpJsonPath.replace(/\/$/, "")}/${post.type}/${post.id}.json`
+    }
+
     return new Promise( async (resolve,reject) => {
         const path = jsonStaticFilePath(post,wpJsonPath);
         try{
@@ -79,17 +81,39 @@ async function getWpPosts(contentArgs: contentArgs): Promise<Array<Post>> {
         try{
             const data = await getContent(contentArgs);
             resolve(data);
-    
         }catch(error){
             reject(error);
         }
     });
-   
 
 
 }
 
+async function wpToStatic( contentArgs: contentArgs, filePaths: {
+    wpJsonPath: string,
+    markdownPath?: string
+}): Promise<Array<savedFilePath>>{
+    const {wpJsonPath} = filePaths;
+    return new Promise( async (resolve,reject) => {
+        try{
+            const posts = await getWpPosts(contentArgs);
+            if( posts.length ){
+                Promise.all(posts.map((post: Post )=> {
+                    return writeToJSON(post,wpJsonPath);               
+                })).then((values: Array<savedFilePath>)=> {
+                    console.log(values);
+                    resolve(values)
+                }).catch(e => reject(e));
+            }
+
+        }catch(err ){
+            reject(err) 
+        }
+    });
+}
+
 module.exports = {
     getWpPosts,
-    writeToJSON
+    writeToJSON,
+    wpToStatic
 }
