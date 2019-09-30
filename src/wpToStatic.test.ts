@@ -1,49 +1,60 @@
-describe( 'getWpPosts', () => {
-    const {getWpPosts} = require( './wpToStatic');
+describe( 'wpToStatic', () => {
+    const fs = require( 'fs');
+    const path = require( 'path');
+    const {wpToStatic} = require( './wpToStatic');
+    const jsonPath = __dirname + '/test-json/';
+    const markdownPath = __dirname + '/test-markdown';
+    beforeEach( () => {
+        if (!fs.existsSync(markdownPath)) {
+            fs.mkdirSync(markdownPath);
+        }
+    });
 
-    test( 'Limits per page', async() => {
-    
-        const data = await getWpPosts({
-            endpoint: 'https://calderaforms.com/wp-json',
-            perPage : 5,
-            page : 1,
-        } );
-        expect( data.length ).toBe(5);
-    });
-    
-    test( 'Gets the right post type', async ( ) => {
-        
-        const pages = await getWpPosts( {
-            endpoint: 'https://calderaforms.com/wp-json',
-            perPage : 5,
-            page : 2,
-            postType: 'page'
+    async function deleteDir(dir:string){
+        return fs.readdir(dir, (err: Error, files: Array<string>) => {
+            if (err) throw err;
+            files.forEach( file => {
+                if( '.gitkeep' !== file ){
+                    fs.unlink(path.join(dir, file), (err:Error) => {
+                        if (err) throw err;
+                    });
+                }
+            })
+            
         });
-        const posts = await getWpPosts( {
-            endpoint: 'https://calderaforms.com/wp-json',
-            perPage : 5,
-            page : 1,
-        } );
-    
-        expect( posts[0].type ).toEqual('post');
-        expect( pages[0].type ).toEqual('page');
-    
-    });
-    
-    test( 'Paginates', async() => {
-        const dataPage2 = await getWpPosts( {
-            endpoint: 'https://calderaforms.com/wp-json',
-            perPage : 5,
-            page : 2,
-        });
-        const dataPage1 = await getWpPosts( {
-            endpoint: 'https://calderaforms.com/wp-json',
-            perPage : 5,
-            page : 1,
-        });
-    
-        expect( dataPage1[0].title.rendered ).not.toEqual(dataPage2[0].title.rendered);
-        expect( dataPage1[0].slug ).not.toEqual(dataPage2[0].slug);
-    
+    }
+
+    afterEach(async () => {
+       await deleteDir(jsonPath + '/post');
+       await deleteDir(jsonPath + '/page');
     })
+    
+    const filePathArgs = {
+        wpJsonPath: jsonPath,
+        markdownPath,
+    }
+    test( 'Limits per page', async() => {
+        const data = await wpToStatic({
+            endpoint: 'https://calderaforms.com/wp-json',
+            perPage : 2,
+            page : 1,
+        }, filePathArgs);
+        expect( data.length ).toBe(2);
+    });
+
+    test( 'Writes the right content ', async() => {
+        const data = await wpToStatic({
+            endpoint: 'https://calderaforms.com/wp-json',
+            perPage : 1,
+            page : 1,
+            postType: 'page'
+        }, filePathArgs);
+        expect( data.length ).toBe(1);
+        const {path,slug} = data[0];
+        expect( typeof path).toBe( 'string');
+        expect( JSON.parse( fs.readFileSync(path)).slug ).toEqual(slug);
+
+    });
+    
+    
 });

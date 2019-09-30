@@ -56,9 +56,14 @@ async function getContent(args: contentArgs) : Promise<Array<Post>>{
     });
 }
 
-type savedFilePath = {path:String};
 
-async function writeToJSON(post: Post,wpJsonPath: string ) : Promise<savedFilePath>{
+type wpToStaticReturn = {
+    path: String,
+    id: Number,
+    slug: String,
+    type: String
+}
+async function writeToJSON(post: Post,wpJsonPath: string ) : Promise<wpToStaticReturn>{
     function jsonStaticFilePath( post: Post,wpJsonPath: string){
         return `${wpJsonPath.replace(/\/$/, "")}/${post.type}/${post.id}.json`
     }
@@ -68,7 +73,10 @@ async function writeToJSON(post: Post,wpJsonPath: string ) : Promise<savedFilePa
         try{
             await fs.writeFileSync( path,JSON.stringify(post));
             resolve({
-                path
+                path,
+                id: post.id,
+                slug: post.slug,
+                type: post.type
             });
         }catch(error){
             reject(error);
@@ -89,10 +97,11 @@ async function getWpPosts(contentArgs: contentArgs): Promise<Array<Post>> {
 
 }
 
+
 async function wpToStatic( contentArgs: contentArgs, filePaths: {
     wpJsonPath: string,
     markdownPath?: string
-}): Promise<Array<savedFilePath>>{
+}): Promise<Array<wpToStaticReturn>>{
     const {wpJsonPath} = filePaths;
     return new Promise( async (resolve,reject) => {
         try{
@@ -100,14 +109,13 @@ async function wpToStatic( contentArgs: contentArgs, filePaths: {
             if( posts.length ){
                 Promise.all(posts.map((post: Post )=> {
                     return writeToJSON(post,wpJsonPath);               
-                })).then((values: Array<savedFilePath>)=> {
-                    console.log(values);
+                })).then((values: Array<wpToStaticReturn>)=> {
                     resolve(values)
                 }).catch(e => reject(e));
             }
 
         }catch(err ){
-            reject(err) 
+            reject(err);
         }
     });
 }
