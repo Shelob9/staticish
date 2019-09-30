@@ -3,16 +3,16 @@ describe( 'wpToStatic', () => {
     const path = require( 'path');
     const {wpToStatic} = require( './wpToStatic');
     const jsonPath = __dirname + '/test-json/';
-    const markdownPath = __dirname + '/test-markdown';
+    const staticMarkdownpath = __dirname + '/test-markdown';
     beforeEach( () => {
-        if (!fs.existsSync(markdownPath)) {
-            fs.mkdirSync(markdownPath);
+        if (!fs.existsSync(staticMarkdownpath)) {
+            fs.mkdirSync(staticMarkdownpath);
         }
-        if (!fs.existsSync(markdownPath + '/page')) {
-            fs.mkdirSync(markdownPath + '/page');
+        if (!fs.existsSync(staticMarkdownpath + '/page')) {
+            fs.mkdirSync(staticMarkdownpath + '/page');
         }
-        if (!fs.existsSync(markdownPath+ '/post')) {
-            fs.mkdirSync(markdownPath + '/post');
+        if (!fs.existsSync(staticMarkdownpath+ '/post')) {
+            fs.mkdirSync(staticMarkdownpath + '/post');
         }
     });
 
@@ -33,17 +33,19 @@ describe( 'wpToStatic', () => {
     afterEach(async () => {
        await deleteDir(jsonPath + '/post');
        await deleteDir(jsonPath + '/page');
+       await deleteDir(staticMarkdownpath + '/post');
+       await deleteDir(staticMarkdownpath + '/page');
     })
     
     const filePathArgs = {
         wpJsonPath: jsonPath,
-        markdownPath,
+        markdownPath: staticMarkdownpath,
     }
     test( 'Limits per page', async() => {
         const data = await wpToStatic({
             endpoint: 'https://calderaforms.com/wp-json',
             perPage : 2,
-            page : 1,
+            page : 2,
         }, filePathArgs);
         expect( data.length ).toBe(2);
     });
@@ -52,13 +54,13 @@ describe( 'wpToStatic', () => {
         const data = await wpToStatic({
             endpoint: 'https://calderaforms.com/wp-json',
             perPage : 1,
-            page : 1,
-            postType: 'page'
+            page : 2,
+            postType: 'post'
         }, filePathArgs);
         expect( data.length ).toBe(1);
-        const {path,slug} = data[0];
-        expect( typeof path).toBe( 'string');
-        expect( JSON.parse( fs.readFileSync(path)).slug ).toEqual(slug);
+        const {title,markdownPath} = data[0];
+        const file = fs.readFileSync(markdownPath);
+        expect( file.toString() ).toContain('# ' + title);
 
     });
     

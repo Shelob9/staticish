@@ -57,7 +57,7 @@ async function getContent(args: contentArgs) : Promise<Array<Post>>{
 }
 
 
-type wpToStaticReturn = {
+type writeReturn = {
     path: String,
     id: Number,
     slug: String,
@@ -66,9 +66,9 @@ type wpToStaticReturn = {
 }
 
 function filePath( post: Post,path: String,extension: String){
-    return `${path.replace(/\/$/, "")}/${post.type}/${post.id}.${extension}`
+    return `${path.replace(/\/$/, "")}/${post.type}/${'md' === extension ? post.slug: post.id}.${extension}`
 }
-async function writeToJSON(post: Post,wpJsonPath: string ) : Promise<wpToStaticReturn>{
+async function writeToJSON(post: Post,wpJsonPath: string ) : Promise<writeReturn>{
 
     return new Promise( async (resolve,reject) => {
         const path = filePath(post,wpJsonPath,'json');
@@ -89,20 +89,21 @@ async function writeToJSON(post: Post,wpJsonPath: string ) : Promise<wpToStaticR
 
 
 
-async function writeToMarkDown(post: Post,markdownPath: string ) : Promise<wpToStaticReturn>{
+async function writeToMarkDown(post: Post,markdownPath: string ) : Promise<writeReturn>{
     const htmlToMarkdown = require( './htmlToMarkdown');
 
     return new Promise( async (resolve,reject) => {
-        const path = filePath(post,markdownPath,'.md');
+        const path = filePath(post,markdownPath,'md');
         try{
-            const html = await htmlToMarkdown(post.content.rendered);
-
+            let html = await htmlToMarkdown(post.content.rendered);
+            html = `# ${post.title.rendered}` + html;
             await fs.writeFileSync( path,html);
             resolve({
                 path,
                 id: post.id,
                 slug: post.slug,
-                type: post.type
+                type: post.type,
+                title: post.title.rendered
             });
         }catch(error){
             reject(error);
@@ -125,25 +126,49 @@ async function getWpPosts(contentArgs: contentArgs): Promise<Array<Post>> {
 
 }
 
-
+type wpToStaticReturn=  {
+    markdownPath: String
+    jsonPath: String,
+    id: Number,
+    slug: String,
+    type: String,
+    title: String
+};
 async function wpToStatic( contentArgs: contentArgs, filePaths: {
     wpJsonPath: string,
     markdownPath: string
-}): Promise<Array<wpToStaticReturn>>{
+}): Promise<Array<
+    wpToStaticReturn
+>>{
     const {wpJsonPath,markdownPath} = filePaths;
     return new Promise( async (resolve,reject) => {
         try{
             const posts = await getWpPosts(contentArgs);
             if( posts.length ){
                 Promise.all(
-                    [
-                        ...posts.map((post: Post )=> {
-                            return writeToJSON(post,wpJsonPath);               
+                    
+                        posts.map((post: Post )=> {
+                            return writeToJSON(post,wpJsonPath).then( 
+                                (p: writeReturn) => {
+                                    const jsonPath = p.path;
+                                    return writeToMarkDown(post,markdownPath).then(
+                                        (p: writeReturn) => {
+                                            return {
+                                                markdownPath: p.path,
+                                                jsonPath: jsonPath,
+                                                id: post.id,
+                                                slug: post.slug,
+                                                type: post.type,
+                                                title: post.title.rendered
+                                            }
+                                        });
+
+                                  
+                                }
+                            )              
                         }),
-                        ...posts.map((post: Post )=> {
-                            return writeToMarkDown(post,markdownPath);               
-                        })
-                    ]
+
+                
                 ).then((values: Array<wpToStaticReturn>)=> {
                     resolve(values)
                 }).catch(e => reject(e));
@@ -153,6 +178,8 @@ async function wpToStatic( contentArgs: contentArgs, filePaths: {
             reject(err);
         }
     });
+    
+   
 }
 
 module.exports = {
