@@ -1,1 +1,5 @@
-console.log('Hi');
+module.exports = {
+    sum(){
+        return 2;
+    }
+}
