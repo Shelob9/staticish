@@ -58,13 +58,16 @@ async function getContent(args: contentArgs) : Promise<Array<Post>>{
 
 
 function jsonStaticFilePath( post: Post,wpJsonPath: string){
-    return `${wpJsonPath}/${post.type}/${post.id}`
+    return `${wpJsonPath.replace(/\/$/, "")}/${post.type}/${post.id}.json`
 }
 async function writeToJSON(post: Post,wpJsonPath: string ){
     return new Promise( async (resolve,reject) => {
+        const path = jsonStaticFilePath(post,wpJsonPath);
         try{
-           const result = fs.writeFileSync( jsonStaticFilePath(post,wpJsonPath) );
-            resolve(result);
+            await fs.writeFileSync( path,JSON.stringify(post));
+            resolve({
+                path
+            });
         }catch(error){
             reject(error);
         }
