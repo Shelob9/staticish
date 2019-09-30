@@ -8,6 +8,12 @@ describe( 'wpToStatic', () => {
         if (!fs.existsSync(markdownPath)) {
             fs.mkdirSync(markdownPath);
         }
+        if (!fs.existsSync(markdownPath + '/page')) {
+            fs.mkdirSync(markdownPath + '/page');
+        }
+        if (!fs.existsSync(markdownPath+ '/post')) {
+            fs.mkdirSync(markdownPath + '/post');
+        }
     });
 
     async function deleteDir(dir:string){
