@@ -1,9 +1,33 @@
 const WPAPI = require( 'wpapi' );
-const fs = require( 'fs');
-module.exports = async function wpToStatic(endpoint: String,perPage: Number,page: Number,postType: string = 'post'){
+
+export interface Post {
+    content: {
+        rendered: String
+    },
+    title: {
+        rendered: String
+    },
+    slug: String,
+    link: String
+    id: Number,
+    type: String
+};
+
+type contentArgs = {
+    endpoint: String,
+    perPage: Number,
+    page: Number,
+    postType: string
+}
+async function getContent(args: contentArgs){
+    const {
+        endpoint,
+        perPage,
+    } = args;
+    const page = args.page ? args.page : 1;
+    const postType = args.postType ? args.postType  : 'post';
     let wp = new WPAPI({ endpoint: endpoint});
     return new Promise( (resolve,reject) => {
-
 
         switch( postType ){
             case 'page':
@@ -16,18 +40,7 @@ module.exports = async function wpToStatic(endpoint: String,perPage: Number,page
         
             wp.perPage( perPage ).page( page )
         
-            .get(function(  err: Error, data: Array<{
-            content: {
-                rendered: String
-            },
-            title: {
-                rendered: String
-            },
-            slug: String,
-            link: String
-            id: Number,
-            type: String
-        }> ) {
+            .get(function(  err: Error, data: Array<Post> ) {
             if ( err ) {
                 reject( err );
             }
@@ -36,5 +49,8 @@ module.exports = async function wpToStatic(endpoint: String,perPage: Number,page
 
         });
     });
+}
+module.exports = async function wpToStatic(contentArgs: contentArgs){
+    return getContent(contentArgs);
 
 }
