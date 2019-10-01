@@ -120,48 +120,73 @@ type wpToStaticReturn=  {
     type: String,
     title: String
 };
-async function wpToStatic( contentArgs: contentArgs, filePaths: {
+
+type filePathArgs ={
     wpJsonPath: string,
     markdownPath: string
-}): Promise<Array<
-    wpToStaticReturn
->>{
+}
+
+
+
+async function wpToStatic( contentArgs: contentArgs, filePaths: filePathArgs): Promise<Array<wpToStaticReturn>>{
     const {wpJsonPath,markdownPath} = filePaths;
-    return new Promise( async (resolve,reject) => {
-        try{
-            const posts = await getWpPosts(contentArgs);
-            if( posts.length ){
-                Promise.all(
-                        posts.map((post: Post )=> {
-                            return writeToJSON(post,wpJsonPath).then( 
-                                (p: writeReturn) => {
-                                    const jsonPath = p.path;
-                                    return writeToMarkDown(post,markdownPath).then(
+
+    async function postTypeToStatic(postType:string) : Promise<Array<wpToStaticReturn>>{
+        return new Promise( async (resolve,reject) => {
+                try{
+                    const posts = await getWpPosts({
+                        ...contentArgs,
+                        postType
+                    });
+                    if( posts.length ){
+                        Promise.all(
+                                posts.map((post: Post )=> {
+                                    return writeToJSON(post,wpJsonPath).then( 
                                         (p: writeReturn) => {
-                                            return {
-                                                markdownPath: p.path,
-                                                jsonPath: jsonPath,
-                                                id: post.id,
-                                                slug: post.slug,
-                                                type: post.type,
-                                                title: post.title.rendered
-                                            }
-                                        });
+                                            const jsonPath = p.path;
+                                            return writeToMarkDown(post,markdownPath).then(
+                                                (p: writeReturn) => {
+                                                    return {
+                                                        markdownPath: p.path,
+                                                        jsonPath: jsonPath,
+                                                        id: post.id,
+                                                        slug: post.slug,
+                                                        type: post.type,
+                                                        title: post.title.rendered
+                                                    }
+                                                });
+        
+                                        
+                                        }
+                                    )              
+                                }),
+        
+                        
+                        ).then((values: Array<wpToStaticReturn>)=> {
+                            resolve(values)
+                        }).catch(e => reject(e));
+                    }
+        
+                }catch(err ){
+                    reject(err);
+                }
+        });
+    };
 
-                                  
-                                }
-                            )              
-                        }),
-
-                
-                ).then((values: Array<wpToStaticReturn>)=> {
-                    resolve(values)
-                }).catch(e => reject(e));
+    return new Promise( async (resolve,reject) => {
+        Promise.all( [
+            postTypeToStatic( 'post' ),
+            postTypeToStatic( 'page' )
+        ]).then( (values: Array<Array<wpToStaticReturn>>)=> {
+            let r: Array<wpToStaticReturn> = [];
+            if( values[0].length ){
+                values[0].forEach( v => r.push(v));
             }
-
-        }catch(err ){
-            reject(err);
-        }
+            if( values[1].length ){
+                values[1].forEach( v => r.push(v));
+            }
+            resolve(r);
+        }).catch(e => reject(e));
     });
     
    

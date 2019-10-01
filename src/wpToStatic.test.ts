@@ -47,7 +47,9 @@ describe( 'wpToStatic', () => {
             perPage : 2,
             page : 2,
         }, filePathArgs);
-        expect( data.length ).toBe(2);
+        expect( data.length )
+        //2 posts and 2 pages
+        .toBe(4);
     });
 
     test( 'Writes the right content ', async() => {
@@ -57,12 +59,10 @@ describe( 'wpToStatic', () => {
             page : 2,
             postType: 'post'
         }, filePathArgs);
-        expect( data.length ).toBe(1);
-        const {title,markdownPath} = data[0];
+        const {title,markdownPath,jsonPath} = data[0];
         const file = fs.readFileSync(markdownPath);
         expect( file.toString() ).toContain('# ' + title);
-
+        expect( JSON.parse( fs.readFileSync(jsonPath)).title.rendered ).toEqual(title);
     });
-    
     
 });
