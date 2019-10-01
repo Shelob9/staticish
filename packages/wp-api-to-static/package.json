@@ -41,7 +41,7 @@
     "unified-stream": "^1.0.5",
     "wpapi": "^1.2.1"
   },
-  "gitHead": "1b8571215ac7f5267d6f8d72e62196b57c107387",
+  "gitHead": "fe17e5384e458fe72b9bd0bdb3696ff2c614e42a",
   "publishConfig": {
     "access": "public"
   }
