@@ -74,7 +74,7 @@ describe('wpToStatic', () => {
     );
     const { title, markdownPath, jsonPath } = data[0];
     const file = fs.readFileSync(markdownPath);
-    expect(file.toString()).toContain('# ' + title);
+    expect(file.toString()).toContain('title: ' + title);
     expect(JSON.parse(fs.readFileSync(jsonPath)).title.rendered).toEqual(title);
   });
 });

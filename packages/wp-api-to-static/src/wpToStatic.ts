@@ -54,17 +54,30 @@ async function writeToJSON(
   });
 }
 
+
+type postFrontMatter = {
+  title: String,
+  slug: String,
+}
+function postToFrontMatterObject(post: Post ): postFrontMatter{
+  return {
+    title: post.title.rendered,
+    slug: post.slug
+  }
+}
 async function writeToMarkDown(
   post: Post,
   markdownPath: string
 ): Promise<writeReturn> {
   const htmlToMarkdown = require('./htmlToMarkdown');
+  const yaml = require('js-yaml');
+  
 
   return new Promise(async (resolve, reject) => {
     const path = filePath(post, markdownPath, 'md');
     try {
       let html = await htmlToMarkdown(post.content.rendered);
-      html = `# ${post.title.rendered}` + html;
+      html = '---' + "\n" + `${yaml.safeDump(postToFrontMatterObject(post),{indent: 4})}` + '---' + "\n\n" + html;
       await fs.writeFileSync(path, html);
       resolve({
         path,

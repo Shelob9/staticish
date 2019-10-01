@@ -54,7 +54,7 @@ describe('wpToStatic', () => {
       .toBe(4);
   });
 
-  test('Writes the right content ', async () => {
+  test('Writes the right content with front matter', async () => {
     const data = await wpToStatic(
       {
         endpoint: 'https://calderaforms.com/wp-json',
@@ -64,9 +64,11 @@ describe('wpToStatic', () => {
       },
       filePathArgs
     );
-    const { title, markdownPath, jsonPath } = data[0];
+    const { title, slug,markdownPath, jsonPath } = data[0];
     const file = fs.readFileSync(markdownPath);
-    expect(file.toString()).toContain('# ' + title);
+    expect(file.toString()).toContain('title: ' + title);
+    expect(file.toString()).toContain('slug: ' + slug);
+    expect(file.toString()).toContain('---');
     expect(JSON.parse(fs.readFileSync(jsonPath)).title.rendered).toEqual(title);
   });
 });
