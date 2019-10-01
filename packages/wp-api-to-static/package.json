@@ -8,6 +8,7 @@
   "files": [
     "dist"
   ],
+
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
@@ -41,5 +42,8 @@
     "unified-stream": "^1.0.5",
     "wpapi": "^1.2.1"
   },
-  "gitHead": "06e6337cead0b6d52978f71da8bcc6dac7605738"
+  "gitHead": "1b8571215ac7f5267d6f8d72e62196b57c107387",
+  "publishConfig": {
+    "access": "public"
+  }
 }
