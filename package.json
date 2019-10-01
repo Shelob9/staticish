@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "yarn workspaces run test",
+    "lint": "yarn workspaces run lint",
     "build": "yarn workspaces run build",
     "start": "yarn workspaces run start",
     "bootstrap": "lerna bootstrap"

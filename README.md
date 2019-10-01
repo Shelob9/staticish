@@ -14,3 +14,5 @@
     - `yarn build`
 - Start All Packages
     - `yarn start`
+- Lint All Packages
+    - `yarn lint src --fix`
