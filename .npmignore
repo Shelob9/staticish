@@ -1,0 +1,16 @@
+*.log
+.DS_Store
+node_modules
+.rts2_cache_cjs
+.rts2_cache_esm
+.rts2_cache_umd
+
+
+src/test-markdown
+src/test-json
+test/test-markdown
+test/test-json
+wp-content
+
+wordpress-importer.0.6.4.zip
+themeunittestdata.wordpress.xml

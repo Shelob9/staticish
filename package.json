@@ -1,43 +1,29 @@
 {
-  "name": "wp-api-to-static",
-  "version": "0.1.0",
-  "main": "dist/index.js",
-  "module": "dist/wp-api-to-static.esm.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "name": "staticish",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint"
+    "test": "yarn workspaces run test",
+    "build": "yarn workspaces run build",
+    "start": "yarn workspaces run start",
+    "bootstrap": "lerna bootstrap"
   },
-  "peerDependencies": {},
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shelob9/wp-api-to-static.git"
   },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
+  "author": "",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/Shelob9/wp-api-to-static/issues"
   },
+  "homepage": "https://github.com/Shelob9/wp-api-to-static#readme",
   "devDependencies": {
-    "@types/jest": "^24.0.18",
-    "husky": "^3.0.7",
-    "tsdx": "^0.9.3",
-    "tslib": "^1.10.0",
-    "typescript": "^3.6.3"
+    "lerna": "^3.16.4"
   },
-  "dependencies": {
-    "rehype-parse": "^6.0.1",
-    "rehype-remark": "^7.0.0",
-    "remark-stringify": "^7.0.3",
-    "unified": "^8.4.0",
-    "unified-stream": "^1.0.5",
-    "wpapi": "^1.2.1"
-  }
+  "workspaces": [
+    "packages/*"
+  ]
 }
