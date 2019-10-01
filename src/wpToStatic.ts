@@ -146,7 +146,6 @@ async function wpToStatic( contentArgs: contentArgs, filePaths: {
             const posts = await getWpPosts(contentArgs);
             if( posts.length ){
                 Promise.all(
-                    
                         posts.map((post: Post )=> {
                             return writeToJSON(post,wpJsonPath).then( 
                                 (p: writeReturn) => {
