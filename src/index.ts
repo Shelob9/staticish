@@ -1,5 +1,2 @@
-module.exports = {
-    sum(){
-        return 2;
-    }
-}
+const {wpToStatic} = require('./wpToStatic');
+module.exports = wpToStatic;
