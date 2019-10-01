@@ -10,7 +10,7 @@ Requires Node 10+. Does NOT support the browser.
 ### Install
 
 ```
-yarn add https://github.com/Shelob9/wp-api-to-static
+yarn add @staticish/wp-api-to-static
 ```
 
 ### Use
@@ -19,7 +19,7 @@ Copy alll posts and pages to static JSON and markdown
 
 ```
 //Get dependency
-const wpToStatic = require( 'wp-api-to-static' );
+const wpToStatic = require( '@staticish/wp-api-to-static' );
 //directories to write to
 const filePathArgs = {
       wpJsonPath: __dirname + '/static-json/', //directory for generated JSON files

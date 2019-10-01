@@ -1,6 +1,7 @@
 {
   "name": "@staticish/wp-api-to-static",
   "version": "0.1.1",
+  "private": false,
   "main": "dist/index.js",
   "module": "dist/wp-api-to-static.esm.js",
   "typings": "dist/index.d.ts",
@@ -39,5 +40,6 @@
     "unified": "^8.4.0",
     "unified-stream": "^1.0.5",
     "wpapi": "^1.2.1"
-  }
+  },
+  "gitHead": "b738d3dccc566544117b5ac0d2f6f8aa44c87dc3"
 }

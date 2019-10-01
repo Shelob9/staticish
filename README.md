@@ -16,3 +16,6 @@
     - `yarn start`
 - Lint All Packages
     - `yarn lint src --fix`
+- Release All Packages
+    - Make sure to commit all changes first
+    - `yarn release`
