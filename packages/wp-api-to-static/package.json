@@ -1,6 +1,6 @@
 {
   "name": "@staticish/wp-api-to-static",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/index.js",
   "module": "dist/wp-api-to-static.esm.js",
   "typings": "dist/index.d.ts",
@@ -13,7 +13,6 @@
     "test": "tsdx test",
     "lint": "tsdx lint"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
