@@ -1,6 +1,8 @@
 const fs = require('fs');
 import {Post} from './wpTypes'
 import {writeReturn} from './postsToStatic';
+import htmlToMarkdown from './htmlToMarkdown';
+const yaml = require('js-yaml');
 
 function filePath(post: Post, path: String, extension: String) {
     return `${path.replace(/\/$/, '')}/${post.type}/${
@@ -31,8 +33,6 @@ function filePath(post: Post, path: String, extension: String) {
     post: Post,
     markdownPath: string
   ): Promise<writeReturn> {
-    const htmlToMarkdown = require('./htmlToMarkdown');
-    const yaml = require('js-yaml');
     return new Promise(async (resolve, reject) => {
       const path = filePath(post, markdownPath, 'md');
       try {

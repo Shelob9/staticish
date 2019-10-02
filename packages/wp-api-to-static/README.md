@@ -24,10 +24,12 @@ import {wpToStatic} from '@staticish/wp-api-to-static';
 //directories to write to
 wpToStatic(
     'https://make.wordpress.org/wp-json', {
-        wpJsonPath: __dirname + '/static-json/', //directory for generated JSON files
-        markdownPath: __dirname + '/static-markdown', //directory for generated markdown files
+        wpJsonPath: __dirname + '/content', //directory for generated JSON files
+        markdownPath: __dirname + '/content', //directory for generated markdown files
     }
-);
+).then( (data: <Array<Array<wpToStaticReturn>>> ) => {
+    console.log(data);
+}).catch( (error: Error) => console.log(error))
 ```
 
 ### Copy One Chunk Of Content To Static Files

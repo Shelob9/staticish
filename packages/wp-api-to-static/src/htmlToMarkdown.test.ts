@@ -1,4 +1,4 @@
-const htmlToMarkdown = require('./htmlToMarkdown');
+import htmlToMarkdown from './htmlToMarkdown';
 
 it('converts', async () => {
   const contents = await htmlToMarkdown(
