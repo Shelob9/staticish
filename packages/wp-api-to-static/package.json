@@ -1,6 +1,6 @@
 {
   "name": "@staticish/wp-api-to-static",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/wp-api-to-static.esm.js",
