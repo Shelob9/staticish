@@ -72,4 +72,5 @@ describe('postsToStatic', () => {
     expect(file.toString()).toContain('---');
     expect(JSON.parse(fs.readFileSync(jsonPath)).title.rendered).toEqual(title);
   });
+
 });
