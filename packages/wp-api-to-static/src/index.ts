@@ -1,5 +1,5 @@
 
-import wpToStatic from './wpToStatic'
+import postsToStatic from './postsToStatic'
 export {
-  wpToStatic,
+  postsToStatic,
 };

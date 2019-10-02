@@ -1,5 +1,5 @@
-import {wpToStatic} from './';
+import {postsToStatic} from './';
 
-test( 'Is function',() => {
-    expect( typeof wpToStatic ).toBe( 'function' );
+test( 'postsToStatic is a function',() => {
+    expect( typeof postsToStatic ).toBe( 'function' );
 });

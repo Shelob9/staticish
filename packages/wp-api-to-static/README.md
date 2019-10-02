@@ -16,18 +16,18 @@ yarn add @staticish/wp-api-to-static
 ### Use
 
 
-Copy alll posts and pages to static JSON and markdown
+Copy a page of posts or pages to static JSON and markdown
 
 ```
 //Get dependency
-import wpToStatic from '@staticish/wp-api-to-static';
+import {postsToStatic} from '@staticish/wp-api-to-static';
 //directories to write to
 const filePathArgs = {
       wpJsonPath: __dirname + '/static-json/', //directory for generated JSON files
       markdownPath: __dirname + '/static-markdown', //directory for generated markdown files
 }
 //get the data and write to file
-const data = await wpToStatic({
+const data = await postsToStatic({
     endpoint: 'https://calderaforms.com/wp-json', //root for WordPress API
     perPage : 1, //number of posts/ pages to get per batch
     page : 2, //current page of data to get

@@ -109,31 +109,20 @@ async function postToStatic( post:Post,   filePaths: filePathArgs  ) : Promise<w
     });
 }
 
-async function postsToStatic(posts: Array<Post>, filePaths: filePathArgs) : Promise<Array<wpToStaticReturn>>{
-  return new Promise( (resolve,reject)  => {
-    Promise.all(posts.map( (post: Post) => {
-        return postToStatic(post,filePaths);
-    })).then( (results: Array<wpToStaticReturn>) => {
-        resolve(results)
-    }).catch( (error: Error) => reject(error) );
-});
-}
 
 
-export default async function wpToStatic(
+export default async function postsToStatic(
   contentArgs: contentArgs,
   filePaths: filePathArgs
 ): Promise<Array<wpToStaticReturn>> {
-  
-
-  return new Promise(async (resolve, reject) => {
-      
     const posts = await getWpPosts(contentArgs);
-      return postsToStatic(posts,filePaths)
-        .then( (results: Array<wpToStaticReturn> ) => {
+    return new Promise( (resolve,reject)  => {
+        Promise.all(posts.map( (post: Post) => {
+            return postToStatic(post,filePaths);
+        })).then( (results: Array<wpToStaticReturn>) => {
             resolve(results)
-        }).catch( (e: Error) => reject(e));
-  });
+        }).catch( (error: Error) => reject(error) );
+    }); 
 }
 
 
