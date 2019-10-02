@@ -12,11 +12,15 @@ function filePath(post: Post, path: String, extension: String) {
   type postFrontMatter = {
     title: String,
     slug: String,
+    created: String,
+    modified: String,
   }
   function postToFrontMatterObject(post: Post ): postFrontMatter{
     return {
       title: post.title.rendered,
-      slug: post.slug
+      slug: post.slug,
+      created: post.date,
+      modified: post.modified
     }
   }
 
@@ -27,8 +31,6 @@ function filePath(post: Post, path: String, extension: String) {
   ): Promise<writeReturn> {
     const htmlToMarkdown = require('./htmlToMarkdown');
     const yaml = require('js-yaml');
-    
-  
     return new Promise(async (resolve, reject) => {
       const path = filePath(post, markdownPath, 'md');
       try {

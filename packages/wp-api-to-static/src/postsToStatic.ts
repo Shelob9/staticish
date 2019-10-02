@@ -18,9 +18,6 @@ export type writeReturn = {
 };
 
 
-
-
-
 export type wpToStaticReturn = {
   markdownPath: String;
   jsonPath: String;
@@ -53,7 +50,6 @@ async function postToStatic( post:Post,   filePaths: filePathArgs  ) : Promise<w
         }).catch( (error: Error) => reject(error) );
     });
 }
-
 
 
 export default async function postsToStatic(

@@ -1,8 +1,8 @@
 import  writeToMarkDown   from './writeToMarkDown';
-
+import {Post} from './wpTypes';
 const fs = require('fs');
 
-const page = {
+const page : Post = {
   id: 118,
   date: '2013-09-11T20:47:06',
   date_gmt: '2013-09-11T20:47:06',
@@ -73,18 +73,44 @@ const page = {
     curies: [{ name: 'wp', href: 'https://api.w.org/{rel}', templated: true }],
   },
 };
-describe('write to markdown', () => {
+
+test( 'export', () => {
+  expect( typeof writeToMarkDown ).toBe( 'function' );
+});
+
+describe('write to markdown', async () => {
   const markdownPath: string = __dirname + '/test-markdown/';
   const pagePath : string = markdownPath + `page/${page.slug}.md`;
-  afterEach(() => {
+
+  let fileString = '';
+  let path : String = '';
+  beforeAll( async ( )=> {
+    const r = await writeToMarkDown(page, markdownPath);
+    path = r.path;
+    fileString = fs.readFileSync(path).toString();
+  });
+  afterAll(() => {
     if (fs.existsSync(pagePath)) {
       fs.unlinkSync(pagePath);
     }
   });
+  
+  
   it('Writes a post to markdown', async () => {
-    const { path,slug} = await writeToMarkDown(page, markdownPath);
     expect(typeof path).toEqual('string');
     expect(path).toEqual(pagePath);
-    expect(fs.readFileSync(path).toString()).toContain(slug);
+    expect(fs.fileExistsSync(path)).toBe(true);
+  });
+
+  const {title,slug,date,modified} = page;
+  it( 'Adds title to the front matter', async () => {
+    expect(fileString).toContain(`title: ${title}`);
+  });
+  it( 'Adds slug to the front matter', async () => {
+    expect(fileString).toContain(`slug: ${slug}`);
+  });
+  it( 'Adds dates to the front matter', async () => {
+    expect(fileString).toContain(`created: '${date}'`);
+    expect(fileString).toContain(`modified: '${modified}'`);
   });
 });
