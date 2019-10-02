@@ -5,6 +5,8 @@ import postsToStatic, {
     wpToStaticReturn
 } from './postsToStatic';
 const superagent = require('superagent');
+
+
 const getTotal = async (postType:string,apiUrl:string): Promise<{total:number,perPage:number}> => {
     return new Promise( (resolve,reject) => {
       return superagent
@@ -23,24 +25,22 @@ const getTotal = async (postType:string,apiUrl:string): Promise<{total:number,pe
       });
     })
 
-  }
+};
 
-  const getTotals = async (apiUrl:string) : Promise<{totalPosts:number,totalPages:number,perPage:number}> => {
-    return new Promise( (resolve,reject) => {
-        Promise.all( [
-          getTotal('posts',apiUrl),
-          getTotal('pages',apiUrl)
-        ]).then( (r: Array<{total:number,perPage:number}>) => {
-            resolve({
-              totalPosts: r[0].total,
-              totalPages: r[1].total,
-              perPage: r[0].perPage
-            })
-        }).catch( e => reject(e));
-    });
-  }
-
-  
+const getTotals = async (apiUrl:string) : Promise<{totalPosts:number,totalPages:number,perPage:number}> => {
+  return new Promise( (resolve,reject) => {
+      Promise.all( [
+        getTotal('posts',apiUrl),
+        getTotal('pages',apiUrl)
+      ]).then( (r: Array<{total:number,perPage:number}>) => {
+          resolve({
+            totalPosts: r[0].total,
+            totalPages: r[1].total,
+            perPage: r[0].perPage
+          })
+      }).catch( e => reject(e));
+  });
+};
 
 async function wpToStatic(
     apiUrl: string,
@@ -80,8 +80,8 @@ async function wpToStatic(
 
     });
      
-
 }
+
 export {
   postsToStatic,
   wpToStatic

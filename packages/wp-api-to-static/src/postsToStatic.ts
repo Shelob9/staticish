@@ -1,19 +1,7 @@
 const fs = require('fs');
 import getWpPosts from './getWpPosts';
 import writeToJSON from  './writeToJson';
-
-export interface Post {
-  content: {
-    rendered: String;
-  };
-  title: {
-    rendered: String;
-  };
-  slug: String;
-  link: String;
-  id: Number;
-  type: String;
-}
+import {Post} from './wpTypes';
 
 export type contentArgs = {
   endpoint: String;
@@ -22,7 +10,7 @@ export type contentArgs = {
   postType: string;
 };
 
-type writeReturn = {
+export type writeReturn = {
   path: String;
   id: Number;
   slug: String;

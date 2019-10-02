@@ -1,32 +1,11 @@
 const fs = require('fs');
-export interface Post {
-  content: {
-    rendered: String;
-  };
-  title: {
-    rendered: String;
-  };
-  slug: String;
-  link: String;
-  id: Number;
-  type: String;
-}
-
-
-type writeReturn = {
-  path: String;
-  id: Number;
-  slug: String;
-  type: String;
-  title: String;
-};
-
+import {Post} from './wpTypes';
+import {writeReturn} from './postsToStatic';
 function filePath(post: Post, path: String, extension: String) {
   return `${path.replace(/\/$/, '')}/${post.type}/${
     'md' === extension ? post.slug : post.id
   }.${extension}`;
 }
-
 
 export default async function writeToJSON(
   post: Post,

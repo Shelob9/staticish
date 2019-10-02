@@ -1,26 +1,7 @@
 const WPAPI = require('wpapi');
-export interface Post {
-  content: {
-    rendered: String;
-  };
-  title: {
-    rendered: String;
-  };
-  slug: String;
-  link: String;
-  id: Number;
-  type: String;
-}
 
-type contentArgs = {
-  endpoint: String;
-  perPage: Number;
-  page: Number;
-  postType: string;
-};
-
-
-
+import {Post} from './wpTypes';
+import {contentArgs} from './postsToStatic';
 
 export default async function getWpPosts(args: contentArgs): Promise<Array<Post>> {
   const { endpoint, perPage } = args;
