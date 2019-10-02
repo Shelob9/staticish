@@ -6,14 +6,13 @@ node_modules
 .rts2_cache_umd
 dist
 
-src/test-markdown/page/*
-!src/test-markdown/page/.gitkeep 
-src/test-markdown/post/*
-!src/test-markdown/post/.gitkeep
-test/test-markdown/page/*
-!test/test-markdown/page/.gitkeep 
-test/test-markdown/post/*
-!test/test-markdown/post/.gitkeep
+packages/wp-api-to-static/src/content
+
+packages/wp-api-to-static/src/test-markdown/page/*
+!packages/wp-api-to-static/src/test-markdown/page/.gitkeep 
+packages/wp-api-to-static/src/test-markdown/post/*
+!packages/wp-api-to-static/src/test-markdown/post/.gitkeep
+
 
 wp-content/plugins/*
 !wp-content/plugins/index.php
