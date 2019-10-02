@@ -73,4 +73,7 @@ describe('postsToStatic', () => {
     expect(JSON.parse(fs.readFileSync(jsonPath)).title.rendered).toEqual(title);
   });
 
+  
+
+
 });

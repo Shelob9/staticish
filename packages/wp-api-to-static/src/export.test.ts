@@ -8,3 +8,4 @@ test( 'wpToStatic is a function',() => {
     expect( typeof wpToStatic ).toBe( 'function' );
 });
 
+
