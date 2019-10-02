@@ -3,22 +3,37 @@
 Converts WordPress posts and pages to static JSON and markdown.
 
 
-## Usage
+## Requriments
 
-Requires Node 10+. Does NOT support the browser.
+* Node 10+.
+* Does NOT support the browser.
 
-### Install
+## Install
 
 ```
 yarn add @staticish/wp-api-to-static
 ```
 
-### Use
+## Use
 
+### Copy All Pages And Posts To Static Files
 
+```javascript
+//Get dependency
+import {wpToStatic} from '@staticish/wp-api-to-static';
+//directories to write to
+wpToStatic(
+    'https://make.wordpress.org/wp-json', {
+        wpJsonPath: __dirname + '/static-json/', //directory for generated JSON files
+        markdownPath: __dirname + '/static-markdown', //directory for generated markdown files
+    }
+);
+```
+
+### Copy One Chunk Of Content To Static Files
 Copy a page of posts or pages to static JSON and markdown
 
-```
+```javascript
 //Get dependency
 import {postsToStatic} from '@staticish/wp-api-to-static';
 //directories to write to
