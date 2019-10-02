@@ -15,7 +15,7 @@ export interface Post {
   type: String;
 }
 
-type contentArgs = {
+export type contentArgs = {
   endpoint: String;
   perPage: Number;
   page: Number;
@@ -76,7 +76,7 @@ async function writeToMarkDown(
 
 
 
-type wpToStaticReturn = {
+export type wpToStaticReturn = {
   markdownPath: String;
   jsonPath: String;
   id: Number;
@@ -85,7 +85,7 @@ type wpToStaticReturn = {
   title: String;
 };
 
-type filePathArgs = {
+export type filePathArgs = {
   wpJsonPath: string;
   markdownPath: string;
 };
