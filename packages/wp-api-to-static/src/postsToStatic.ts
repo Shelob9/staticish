@@ -1,8 +1,7 @@
-const fs = require('fs');
 import getWpPosts from './getWpPosts';
 import writeToJSON from  './writeToJson';
-import {Post} from './wpTypes';
-
+import {Post} from './wpTypes'
+import writeToMarkDown from './writeToMarkDown';
 export type contentArgs = {
   endpoint: String;
   perPage: Number;
@@ -18,49 +17,7 @@ export type writeReturn = {
   title: String;
 };
 
-function filePath(post: Post, path: String, extension: String) {
-  return `${path.replace(/\/$/, '')}/${post.type}/${
-    'md' === extension ? post.slug : post.id
-  }.${extension}`;
-}
-  
 
-type postFrontMatter = {
-  title: String,
-  slug: String,
-}
-function postToFrontMatterObject(post: Post ): postFrontMatter{
-  return {
-    title: post.title.rendered,
-    slug: post.slug
-  }
-}
-async function writeToMarkDown(
-  post: Post,
-  markdownPath: string
-): Promise<writeReturn> {
-  const htmlToMarkdown = require('./htmlToMarkdown');
-  const yaml = require('js-yaml');
-  
-
-  return new Promise(async (resolve, reject) => {
-    const path = filePath(post, markdownPath, 'md');
-    try {
-      let html = await htmlToMarkdown(post.content.rendered);
-      html = '---' + "\n" + `${yaml.safeDump(postToFrontMatterObject(post),{indent: 4})}` + '---' + "\n\n" + html;
-      await fs.writeFileSync(path, html);
-      resolve({
-        path,
-        id: post.id,
-        slug: post.slug,
-        type: post.type,
-        title: post.title.rendered,
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
 
 
 
