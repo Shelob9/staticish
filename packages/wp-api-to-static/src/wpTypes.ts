@@ -17,13 +17,13 @@ export interface Post {
     content: ContentObject;
     excerpt: ContentObject;
     author: Number,
-  featured_media: Number,
-  parent: Number,
-  menu_order: Number,
-  comment_status: String;
-  ping_status: String;
-  template: String;
-  meta: any;
+    featured_media: Number,
+    parent: Number,
+    menu_order: Number,
+    comment_status: String;
+    ping_status: String;
+    template: String;
+    meta: any;
     slug: String;
     guid: {rendered: String }
     _links: any;

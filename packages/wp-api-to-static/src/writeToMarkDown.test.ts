@@ -78,7 +78,7 @@ test( 'export', () => {
   expect( typeof writeToMarkDown ).toBe( 'function' );
 });
 
-describe('write to markdown', async () => {
+describe('write to markdown', () => {
   const markdownPath: string = __dirname + '/test-markdown/';
   const pagePath : string = markdownPath + `page/${page.slug}.md`;
 
@@ -99,12 +99,12 @@ describe('write to markdown', async () => {
   it('Writes a post to markdown', async () => {
     expect(typeof path).toEqual('string');
     expect(path).toEqual(pagePath);
-    expect(fs.fileExistsSync(path)).toBe(true);
+    expect(fs.existsSync(path)).toBe(true);
   });
 
   const {title,slug,date,modified} = page;
   it( 'Adds title to the front matter', async () => {
-    expect(fileString).toContain(`title: ${title}`);
+    expect(fileString).toContain(`title: '${title.rendered}'`);
   });
   it( 'Adds slug to the front matter', async () => {
     expect(fileString).toContain(`slug: ${slug}`);
