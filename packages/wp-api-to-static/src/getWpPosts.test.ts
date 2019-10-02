@@ -1,11 +1,13 @@
+import getWpPosts  from './getWpPosts';
+
 describe('getWpPosts', () => {
-  const { getWpPosts } = require('./wpToStatic');
 
   test('Limits per page', async () => {
     const data = await getWpPosts({
       endpoint: 'https://calderaforms.com/wp-json',
       perPage: 5,
       page: 1,
+      postType: 'post'
     });
     expect(data.length).toBe(5);
   });
@@ -21,6 +23,7 @@ describe('getWpPosts', () => {
       endpoint: 'https://calderaforms.com/wp-json',
       perPage: 5,
       page: 1,
+      postType: 'post'
     });
 
     expect(posts[0].type).toEqual('post');
@@ -32,11 +35,13 @@ describe('getWpPosts', () => {
       endpoint: 'https://calderaforms.com/wp-json',
       perPage: 5,
       page: 2,
+      postType: 'post'
     });
     const dataPage1 = await getWpPosts({
       endpoint: 'https://calderaforms.com/wp-json',
       perPage: 5,
       page: 1,
+      postType: 'post'
     });
 
     expect(dataPage1[0].title.rendered).not.toEqual(

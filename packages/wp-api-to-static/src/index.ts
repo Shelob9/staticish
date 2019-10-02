@@ -1,2 +1,5 @@
-const { wpToStatic } = require('./wpToStatic');
-module.exports = wpToStatic;
+
+import wpToStatic from './wpToStatic'
+export {
+  wpToStatic,
+};

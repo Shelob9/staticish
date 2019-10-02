@@ -1,7 +1,8 @@
+import wpToStatic  from './wpToStatic';
+
 describe('wpToStatic', () => {
   const fs = require('fs');
   const path = require('path');
-  const { wpToStatic } = require('./wpToStatic');
   const jsonPath = __dirname + '/test-json/';
   const staticMarkdownpath = __dirname + '/test-markdown';
   beforeEach(() => {
@@ -46,12 +47,12 @@ describe('wpToStatic', () => {
         endpoint: 'https://calderaforms.com/wp-json',
         perPage: 2,
         page: 2,
+        postType: 'post'
       },
       filePathArgs
     );
     expect(data.length)
-      //2 posts and 2 pages
-      .toBe(4);
+      .toBe(2);
   });
 
   test('Writes the right content with front matter', async () => {

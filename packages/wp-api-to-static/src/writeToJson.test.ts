@@ -1,4 +1,4 @@
-const { writeToJSON } = require('./wpToStatic');
+import  writeToJSON  from './writeToJSON';
 
 const fs = require('fs');
 

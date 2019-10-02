@@ -1,5 +1,7 @@
-const WPAPI = require('wpapi');
 const fs = require('fs');
+import getWpPosts from './getWpPosts';
+import writeToJSON from  './writeToJson';
+
 export interface Post {
   content: {
     rendered: String;
@@ -33,27 +35,7 @@ function filePath(post: Post, path: String, extension: String) {
     'md' === extension ? post.slug : post.id
   }.${extension}`;
 }
-async function writeToJSON(
-  post: Post,
-  wpJsonPath: string
-): Promise<writeReturn> {
-  return new Promise(async (resolve, reject) => {
-    const path = filePath(post, wpJsonPath, 'json');
-    try {
-      await fs.writeFileSync(path, JSON.stringify(post));
-      resolve({
-        path,
-        id: post.id,
-        slug: post.slug,
-        type: post.type,
-        title: post.title.rendered,
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-
+  
 
 type postFrontMatter = {
   title: String,
@@ -92,33 +74,7 @@ async function writeToMarkDown(
   });
 }
 
-async function getWpPosts(args: contentArgs): Promise<Array<Post>> {
-  const { endpoint, perPage } = args;
-  const page = args.page ? args.page : 1;
-  const postType = args.postType ? args.postType : 'post';
-  let wp = new WPAPI({ endpoint: endpoint });
-  return new Promise((resolve, reject) => {
-    switch (postType) {
-      case 'page':
-        wp = wp.pages();
-        break;
-      default:
-        wp = wp.posts();
-        break;
-    }
 
-    wp.perPage(perPage)
-      .page(page)
-
-      .get(function(err: Error, data: Array<Post>) {
-        if (err) {
-          reject(err);
-        }
-
-        resolve(data);
-      });
-  });
-}
 
 type wpToStaticReturn = {
   markdownPath: String;
@@ -134,70 +90,50 @@ type filePathArgs = {
   markdownPath: string;
 };
 
-async function wpToStatic(
+async function postToStatic( post:Post,   filePaths: filePathArgs  ) : Promise<wpToStaticReturn>{
+  const { wpJsonPath, markdownPath } = filePaths;
+    return new Promise( (resolve,reject)  => {
+        Promise.all([
+           writeToJSON(post, wpJsonPath),
+           writeToMarkDown(post,markdownPath)
+        ]).then( (results: Array<writeReturn>) => {
+            resolve({
+              markdownPath: results[1].path,
+              jsonPath: results[0].path,
+              id: post.id,
+              slug: post.slug,
+              type: post.type,
+              title: post.title.rendered
+            });
+        }).catch( (error: Error) => reject(error) );
+    });
+}
+
+async function postsToStatic(posts: Array<Post>, filePaths: filePathArgs) : Promise<Array<wpToStaticReturn>>{
+  return new Promise( (resolve,reject)  => {
+    Promise.all(posts.map( (post: Post) => {
+        return postToStatic(post,filePaths);
+    })).then( (results: Array<wpToStaticReturn>) => {
+        resolve(results)
+    }).catch( (error: Error) => reject(error) );
+});
+}
+
+
+export default async function wpToStatic(
   contentArgs: contentArgs,
   filePaths: filePathArgs
 ): Promise<Array<wpToStaticReturn>> {
-  const { wpJsonPath, markdownPath } = filePaths;
-
-  async function postTypeToStatic(
-    postType: string
-  ): Promise<Array<wpToStaticReturn>> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const posts = await getWpPosts({
-          ...contentArgs,
-          postType,
-        });
-        if (posts.length) {
-          Promise.all(
-            posts.map((post: Post) => {
-              return writeToJSON(post, wpJsonPath).then((p: writeReturn) => {
-                const jsonPath = p.path;
-                return writeToMarkDown(post, markdownPath).then(
-                  (p: writeReturn) => {
-                    return {
-                      markdownPath: p.path,
-                      jsonPath: jsonPath,
-                      id: post.id,
-                      slug: post.slug,
-                      type: post.type,
-                      title: post.title.rendered,
-                    };
-                  }
-                );
-              });
-            })
-          )
-            .then((values: Array<wpToStaticReturn>) => {
-              resolve(values);
-            })
-            .catch(e => reject(e));
-        }
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
+  
 
   return new Promise(async (resolve, reject) => {
-    Promise.all([postTypeToStatic('post'), postTypeToStatic('page')])
-      .then((values: Array<Array<wpToStaticReturn>>) => {
-        let r: Array<wpToStaticReturn> = [];
-        if (values[0].length) {
-          values[0].forEach(v => r.push(v));
-        }
-        if (values[1].length) {
-          values[1].forEach(v => r.push(v));
-        }
-        resolve(r);
-      })
-      .catch(e => reject(e));
+      
+    const posts = await getWpPosts(contentArgs);
+      return postsToStatic(posts,filePaths)
+        .then( (results: Array<wpToStaticReturn> ) => {
+            resolve(results)
+        }).catch( (e: Error) => reject(e));
   });
 }
 
-module.exports = {
-  getWpPosts,
-  writeToJSON,
-  wpToStatic,
-};
+

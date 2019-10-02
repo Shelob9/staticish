@@ -15,11 +15,12 @@ yarn add @staticish/wp-api-to-static
 
 ### Use
 
+
 Copy alll posts and pages to static JSON and markdown
 
 ```
 //Get dependency
-const wpToStatic = require( '@staticish/wp-api-to-static' );
+import wpToStatic from '@staticish/wp-api-to-static';
 //directories to write to
 const filePathArgs = {
       wpJsonPath: __dirname + '/static-json/', //directory for generated JSON files
@@ -34,6 +35,7 @@ const data = await wpToStatic({
 
 //...
 ```
+
 
 ### Develop
 
