@@ -30,6 +30,7 @@ USAGE
 <!-- commands -->
 * [`staticish hello [FILE]`](#staticish-hello-file)
 * [`staticish help [COMMAND]`](#staticish-help-command)
+* [`staticish wordpress [FILE]`](#staticish-wordpress-file)
 
 ## `staticish hello [FILE]`
 
@@ -67,4 +68,20 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
+
+## `staticish wordpress [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ staticish wordpress [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/wordpress.ts](https://github.com/shelob9/cli/blob/v0.0.0/src/commands/wordpress.ts)_
 <!-- commandsstop -->
