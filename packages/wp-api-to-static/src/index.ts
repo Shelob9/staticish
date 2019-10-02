@@ -58,18 +58,18 @@ async function wpToStatic(
             }
         };
         for( let postsPage :number = 1; postsPage <= totalPosts; postsPage ++ ){
-        promises.push(postsToStatic( makeContentArgs({
-            postType: 'post',
-            perPage,
-            page: postsPage
-        }),filePathArgs));
+            promises.push(postsToStatic( makeContentArgs({
+                postType: 'post',
+                perPage,
+                page: postsPage
+            }),filePathArgs));
         }
         for( let pagePage :number = 1; pagePage <= totalPages; pagePage ++ ){
-        promises.push(postsToStatic( makeContentArgs({
-            postType: 'page',
-            perPage,
-            page: pagePage
-        }),filePathArgs));
+            promises.push(postsToStatic( makeContentArgs({
+                postType: 'page',
+                perPage,
+                page: pagePage
+            }),filePathArgs));
         }
         Promise
             .all(promises)
