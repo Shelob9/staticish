@@ -84,11 +84,12 @@ describe('write to markdown', () => {
 
   let fileString = '';
   let path : String = '';
-  beforeAll( async ( )=> {
+  beforeAll( async () => {
     const r = await writeToMarkDown(page, markdownPath);
     path = r.path;
     fileString = fs.readFileSync(path).toString();
   });
+
   afterAll(() => {
     if (fs.existsSync(pagePath)) {
       fs.unlinkSync(pagePath);
@@ -113,4 +114,8 @@ describe('write to markdown', () => {
     expect(fileString).toContain(`created: '${date}'`);
     expect(fileString).toContain(`modified: '${modified}'`);
   });
+  it( 'Adds excerpt to the front matter', async () => {
+    expect(fileString).toContain(`excerpt: `);
+  });
+  
 });

@@ -14,13 +14,15 @@ function filePath(post: Post, path: String, extension: String) {
     slug: String,
     created: String,
     modified: String,
+    excerpt: String,
   }
   function postToFrontMatterObject(post: Post ): postFrontMatter{
     return {
       title: post.title.rendered,
       slug: post.slug,
       created: post.date,
-      modified: post.modified
+      modified: post.modified,
+      excerpt: post.excerpt.rendered
     }
   }
 
