@@ -14,7 +14,7 @@ function filePath(post: Post, path: String, extension: String) {
   type postFrontMatter = {
     title: String,
     slug: String,
-    created: String,
+    date: String,
     modified: String,
     excerpt: String,
   }
@@ -22,7 +22,7 @@ function filePath(post: Post, path: String, extension: String) {
     return {
       title: post.title.rendered,
       slug: post.slug,
-      created: post.date,
+      date: post.date,
       modified: post.modified,
       excerpt: post.excerpt.rendered
     }
