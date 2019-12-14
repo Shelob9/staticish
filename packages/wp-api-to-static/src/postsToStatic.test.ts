@@ -1,4 +1,4 @@
-import postsToStatic  from './postsToStatic';
+import postsToStatic from './postsToStatic';
 
 describe('postsToStatic', () => {
   const fs = require('fs');
@@ -47,12 +47,11 @@ describe('postsToStatic', () => {
         endpoint: 'https://calderaforms.com/wp-json',
         perPage: 2,
         page: 2,
-        postType: 'post'
+        postType: 'post',
       },
       filePathArgs
     );
-    expect(data.length)
-      .toBe(2);
+    expect(data.length).toBe(2);
   });
 
   test('Writes the right content with front matter', async () => {
@@ -65,15 +64,11 @@ describe('postsToStatic', () => {
       },
       filePathArgs
     );
-    const { title, slug,markdownPath, jsonPath } = data[0];
+    const { title, slug, markdownPath, jsonPath } = data[0];
     const file = fs.readFileSync(markdownPath);
-    expect(file.toString()).toContain('title: ' + title);
+    expect(file.toString()).toContain(`title: '${title}'`);
     expect(file.toString()).toContain('slug: ' + slug);
     expect(file.toString()).toContain('---');
     expect(JSON.parse(fs.readFileSync(jsonPath)).title.rendered).toEqual(title);
   });
-
-  
-
-
 });
