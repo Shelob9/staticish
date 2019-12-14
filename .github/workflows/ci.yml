@@ -1,24 +1,23 @@
-name: CI
-
-on: [push]
-
+name: Test
+on:
+  push:
+    branches:
+      - master
 jobs:
-  test:
-    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+  install-and-test:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node_version: [12,10]
-        os: [ubuntu-latest]
-
+        node-version: [10.x, 12.x]
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node_version }}
-      uses: actions/setup-node@v1
-      with:
-        version: ${{ matrix.node_version }}
-    - name: install, build and test
-      run: |
-        yarn
-        yarn build
-        yarn test
+      - uses: actions/checkout@master
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install and Test
+        run: |
+          yarn
+          yarn test
+        env:
+          CI: true
