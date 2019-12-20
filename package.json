@@ -7,10 +7,11 @@
 	"scripts": {
 		"test": "yarn lerna run --parallel test",
 		"lint": "yarn workspaces run lint",
-		"build": "yarn workspaces run build",
-		"start": "yarn workspaces run start",
+		"build": "yarn lerna run --parallel build",
+		"start": "yarn lerna run --parallel start",
 		"bootstrap": "lerna bootstrap",
-		"release": "lerna publish"
+		"release": "lerna publish",
+		"storybook": "yarn workspace @staticish/post-ui storybook"
 	},
 	"repository": {
 		"type": "git",

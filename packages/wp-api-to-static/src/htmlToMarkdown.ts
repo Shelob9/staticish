@@ -8,13 +8,13 @@ const processor = unified()
   .use(rehype2remark)
   .use(stringify);
 
-export default async function htmlToMarkdown(content: String) {
+export default async function htmlToMarkdown(content: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    processor.process(content, (err: Error, file: { contents: String }) => {
+    processor.process(content, (err: Error, file: { contents: string }) => {
       if (err) {
         reject(err);
       }
       resolve(file.contents);
     });
   });
-};
+}
