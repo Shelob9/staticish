@@ -66,8 +66,10 @@ describe('postsToStatic', () => {
     );
     const { title, slug, markdownPath, jsonPath } = data[0];
     const file = fs.readFileSync(markdownPath);
-    expect(file.toString()).toContain(`title: '${title}'`);
-    expect(file.toString()).toContain('slug: ' + slug);
+    expect(file.toString()).toContain(`title:`);
+    expect(file.toString()).toContain(title);
+    expect(file.toString()).toContain('slug:');
+    expect(file.toString()).toContain(slug);
     expect(file.toString()).toContain('---');
     expect(JSON.parse(fs.readFileSync(jsonPath)).title.rendered).toEqual(title);
   });
