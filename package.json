@@ -1,31 +1,31 @@
 {
-  "name": "staticish",
-  "private": true,
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "yarn workspaces run test",
-    "lint": "yarn workspaces run lint",
-    "build": "yarn workspaces run build",
-    "start": "yarn workspaces run start",
-    "bootstrap": "lerna bootstrap",
-    "release" : "lerna publish"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Shelob9/wp-api-to-static.git"
-  },
-  "author": "",
-  "license": "GPL-2.0",
-  "bugs": {
-    "url": "https://github.com/Shelob9/wp-api-to-static/issues"
-  },
-  "homepage": "https://github.com/Shelob9/wp-api-to-static#readme",
-  "devDependencies": {
-    "lerna": "^3.16.4"
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+	"name": "staticish",
+	"private": true,
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "yarn lerna run --parallel test",
+		"lint": "yarn workspaces run lint",
+		"build": "yarn workspaces run build",
+		"start": "yarn workspaces run start",
+		"bootstrap": "lerna bootstrap",
+		"release": "lerna publish"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Shelob9/wp-api-to-static.git"
+	},
+	"author": "",
+	"license": "GPL-2.0",
+	"bugs": {
+		"url": "https://github.com/Shelob9/wp-api-to-static/issues"
+	},
+	"homepage": "https://github.com/Shelob9/wp-api-to-static#readme",
+	"devDependencies": {
+		"lerna": "^3.16.4"
+	},
+	"workspaces": [
+		"packages/*"
+	]
 }
