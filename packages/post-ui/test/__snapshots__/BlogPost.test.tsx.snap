@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`It once 1`] = `
+<div>
+  <div>
+    <h1>
+      A Quick Holiday Update!
+    </h1>
+    <div>
+      
+
+      <h2>
+        Bug fixes as a present are kind of like getting socks for Christmas… not the most thrilling thing, but when you need socks…
+      </h2>
+      
+
+
+
+
+      <p>
+        The holidays are often a different kind of time for teams. We want to keep moving all the things forward, but it’s also healthy to slow down and appreciate family, too. The end of the year around Saturday Drive usually isn’t a time for heavy lifting, but it is a time we all devote to personal projects inside the company.
+      </p>
+      
+
+
+
+
+      <p>
+        What does this mean to you? We’ve made a point of spending a large portion of our time this holiday cooldown addressing some issues that we know have been pains in Caldera Forms for a good long while now. Hopefully below you’ll find that some thorns have been removed for you!
+      </p>
+      
+
+
+
+
+      <h2>
+        Here’s what the 1.8.9 Caldera Forms update has in store for your WordPress form building experience!
+      </h2>
+      
+
+
+
+
+      <p>
+        The below fixes were selected to happen now because they were 1) bitesize enough that we could address them for you in a short period before the holidays, and 2) causing major pain for many of you. In January we’ll be starting our next major build cycle, and rest assured there will be a lot more of this coming soon! 
+      </p>
+      
+
+
+
+
+      <p>
+        Here’s what’s new!
+      </p>
+      
+
+
+
+
+      <ul>
+        <li>
+          Pro settings are no longer visible in the dashboard for users that are not currently connected to the Pro app. If you’re a temporarily disconnected Pro user, here’s 
+          <a
+            href="https://calderaforms.com/doc/caldera-forms-show-pro-ui/"
+          >
+            how to make them visible again
+          </a>
+          , or 
+          <a
+            href="https://calderaforms.com/support/"
+          >
+            reach out and talk to us
+          </a>
+           about its modern, upgraded replacement.
+        </li>
+        <li>
+          Fixed a PHP notice ( PHP Notice: Undefined variable: symbols in /classes/core.php on line 1416 )
+        </li>
+        <li>
+          Completed strings that were missing from translations.
+        </li>
+        <li>
+          Corrected the list of preset options for US states. These should now work as expected out-of-the-box.
+        </li>
+        <li>
+          Added a {referer_url} magic tag
+        </li>
+        <li>
+          The color picker field was fixed. You can put the crayons away now 🙂
+        </li>
+      </ul>
+      
+
+
+
+
+      <h2>
+        Want a sneak preview into what January and February may bring?
+      </h2>
+      
+
+
+
+
+      <p>
+        We’re always hesitant to talk in too much detail about specific things to come. We’re always going to do our best to deliver on anything we spend time and resources on. Any developer understands that sometimes things turn out to be more complex than anticipated, take longer to complete or more resources than expected, etc etc. 
+      </p>
+      
+
+
+
+
+      <p>
+        In the spirit of better communication with all of you though, here are some highlights of what we have planned for Caldera Forms over the next couple months 🙂
+      </p>
+      
+
+
+
+
+      <ul>
+        <li>
+          Expect a much better support experience soon. We’re currently hiring for an additional support person, and reworking the technical way we manage Caldera Forms support, and anticipate being able to open channels for free users soon.
+        </li>
+        <li>
+          MailChimp will get some much-needed love. On one hand, it just plain needs fixing. On the other hand, the way it worked in the first place wasn’t ideal. We’ve hatched a plot to get it into a much better place that sets a uniform stage for upgrading all other email marketing & CRM add-ons. Stretch goal: Salesforce 1.0 🙂
+        </li>
+        <li>
+          Many more bug fixes. We’re dedicating developers for a full-time deep dive into many more of the issues that have been a pain in your neck for way too long.
+        </li>
+      </ul>
+      
+
+
+
+
+      <h2>
+        Want to chime in with bug fixes or feature requests?
+      </h2>
+      
+
+
+
+
+      <p>
+        Stay tuned. We’re working up a survey that will be going out to as many Caldera Forms users as we can reach after the turn of the year. Keep your eye out for that here and in the 
+        <a
+          href="https://www.facebook.com/groups/651862761663883/"
+        >
+          Caldera Forming Facebook group
+        </a>
+        . 
+      </p>
+      
+
+
+
+
+      <p>
+        Or sound off here. What bug features or fixes would you like to see in the near future?
+      </p>
+      
+
+    </div>
+  </div>
+</div>
+`;
