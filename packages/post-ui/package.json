@@ -1,5 +1,5 @@
 {
-  "name": "@staticish/post-ui"
+  "name": "@staticish/post-ui",
   "version": "0.1.0",
   "license": "MIT",
   "main": "dist/index.js",
@@ -30,7 +30,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "post-ui",
   "author": "Josh Pollock",
   "module": "dist/post-ui.esm.js",
   "devDependencies": {
