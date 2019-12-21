@@ -4,7 +4,10 @@ export interface ContentObject {
   raw?: string;
 }
 
-export interface Post {
+/**
+ * A WordPress post, as returned by the WordPress REST API
+ */
+export interface WpApiPost {
   id: Number;
   date: string;
   date_gmt: string;

@@ -46,6 +46,7 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
-    "@testing-library/react": "^9.4.0"
+    "@testing-library/react": "^9.4.0",
+    "@wordpress/components": "^8.5.0"
   }
 }

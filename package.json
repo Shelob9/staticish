@@ -6,6 +6,9 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "yarn lerna run --parallel test",
+		"test:ui": "yarn workspace @staticish/post-ui test",
+		"test:static": "yarn workspace @staticish/wp-api-to-static test",
+		"test:site": "yarn workspace @staticish/wp-like-site test",
 		"lint": "yarn workspaces run lint",
 		"build": "yarn lerna run --parallel build",
 		"start": "yarn lerna run --parallel start",
