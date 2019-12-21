@@ -1,7 +1,7 @@
 const WPAPI = require('wpapi');
 
-import { WpApiPost } from './wpTypes';
-import { contentArgs } from './postsToStatic';
+import { WpApiPost } from '../wpTypes';
+import { contentArgs } from '../postsToStatic';
 
 export default async function getWpPosts(
   args: contentArgs

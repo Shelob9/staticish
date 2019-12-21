@@ -1,15 +1,14 @@
-const fs = require('fs');
 import { WpApiPost } from './wpTypes';
 import { writeReturn } from './postsToStatic';
 import htmlToMarkdown from './htmlToMarkdown';
+import { filePath } from './writeUtil';
+
+const fs = require('fs');
 const yaml = require('js-yaml');
 
-function filePath(post: WpApiPost, path: String, extension: String) {
-  return `${path.replace(/\/$/, '')}/${post.type}/${
-    'md' === extension ? post.slug : post.id
-  }.${extension}`;
-}
-
+/**
+ * Front matter for posts saved as markdown by this system
+ */
 type postFrontMatter = {
   title: String;
   slug: String;
@@ -17,6 +16,12 @@ type postFrontMatter = {
   modified: String;
   excerpt: String;
 };
+
+/**
+ * Create front matter from a post.
+ *
+ * @param post
+ */
 function postToFrontMatterObject(post: WpApiPost): postFrontMatter {
   return {
     title: post.title.rendered,
@@ -27,6 +32,12 @@ function postToFrontMatterObject(post: WpApiPost): postFrontMatter {
   };
 }
 
+/**
+ * Write a WordPress post to markdown
+ *
+ * @param post
+ * @param markdownPath
+ */
 export default async function writeToMarkDown(
   post: WpApiPost,
   markdownPath: string

@@ -1,12 +1,14 @@
 const fs = require('fs');
 import { WpApiPost } from './wpTypes';
 import { writeReturn } from './postsToStatic';
-function filePath(post: WpApiPost, path: String, extension: String) {
-  return `${path.replace(/\/$/, '')}/${post.type}/${
-    'md' === extension ? post.slug : post.id
-  }.${extension}`;
-}
+import { filePath } from './writeUtil';
 
+/**
+ * Write a WordPress post to JSON
+ *
+ * @param post
+ * @param wpJsonPath
+ */
 export default async function writeToJSON(
   post: WpApiPost,
   wpJsonPath: string

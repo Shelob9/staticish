@@ -1,4 +1,4 @@
-import getWpPosts from './getWpPosts';
+import getWpPosts from './wp-api/getWpPosts';
 import writeToJSON from './writeToJson';
 import { WpApiPost } from './wpTypes';
 import writeToMarkDown from './writeToMarkDown';
@@ -55,6 +55,12 @@ async function postToStatic(
   });
 }
 
+/**
+ * Convert all posts of a post type on a WordPress site to static
+ *
+ * @param contentArgs
+ * @param filePaths
+ */
 export default async function postsToStatic(
   contentArgs: contentArgs,
   filePaths: filePathArgs
