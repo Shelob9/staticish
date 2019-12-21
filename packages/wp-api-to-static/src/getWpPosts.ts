@@ -1,9 +1,11 @@
 const WPAPI = require('wpapi');
 
-import {Post} from './wpTypes';
-import {contentArgs} from './postsToStatic';
+import { Post } from './wpTypes';
+import { contentArgs } from './postsToStatic';
 
-export default async function getWpPosts(args: contentArgs): Promise<Array<Post>> {
+export default async function getWpPosts(
+  args: contentArgs
+): Promise<Array<Post>> {
   const { endpoint, perPage } = args;
   const page = args.page ? args.page : 1;
   const postType = args.postType ? args.postType : 'post';
@@ -20,7 +22,6 @@ export default async function getWpPosts(args: contentArgs): Promise<Array<Post>
 
     wp.perPage(perPage)
       .page(page)
-
       .get(function(err: Error, data: Array<Post>) {
         if (err) {
           reject(err);
