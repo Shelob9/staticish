@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8121:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: dbuser
+      WORDPRESS_DB_PASSWORD: dbpass
+      WORDPRESS_DB_NAME: dbname
+    volumes:
+      - wordpress:/var/www/html
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: dbname
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpass
+      MYSQL_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - db:/var/lib/mysql
+  cli:
+    image: wordpress:cli
+    volumes:
+      - wordpress:/var/www/html
+    environment:
+      ABSPATH: /usr/src/wordpress/
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: dbuser
+      WORDPRESS_DB_PASSWORD: dbpass
+      WORDPRESS_DB_NAME: dbname
+volumes:
+  wordpress:
+  db:

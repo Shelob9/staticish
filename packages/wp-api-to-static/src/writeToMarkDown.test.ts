@@ -1,8 +1,8 @@
-import  writeToMarkDown   from './writeToMarkDown';
-import {Post} from './wpTypes';
+import writeToMarkDown from './writeToMarkDown';
+import { WpApiPost } from './wpTypes';
 const fs = require('fs');
 
-const page : Post = {
+const page: WpApiPost = {
   id: 118,
   date: '2013-09-11T20:47:06',
   date_gmt: '2013-09-11T20:47:06',
@@ -74,17 +74,17 @@ const page : Post = {
   },
 };
 
-test( 'export', () => {
-  expect( typeof writeToMarkDown ).toBe( 'function' );
+test('export', () => {
+  expect(typeof writeToMarkDown).toBe('function');
 });
 
 describe('write to markdown', () => {
   const markdownPath: string = __dirname + '/test-markdown/';
-  const pagePath : string = markdownPath + `page/${page.slug}.md`;
+  const pagePath: string = markdownPath + `page/${page.slug}.md`;
 
   let fileString = '';
-  let path : String = '';
-  beforeAll( async () => {
+  let path: String = '';
+  beforeAll(async () => {
     const r = await writeToMarkDown(page, markdownPath);
     path = r.path;
     fileString = fs.readFileSync(path).toString();
@@ -95,27 +95,25 @@ describe('write to markdown', () => {
       fs.unlinkSync(pagePath);
     }
   });
-  
-  
+
   it('Writes a post to markdown', async () => {
     expect(typeof path).toEqual('string');
     expect(path).toEqual(pagePath);
     expect(fs.existsSync(path)).toBe(true);
   });
 
-  const {title,slug,date,modified} = page;
-  it( 'Adds title to the front matter', async () => {
+  const { title, slug, date, modified } = page;
+  it('Adds title to the front matter', async () => {
     expect(fileString).toContain(`title: '${title.rendered}'`);
   });
-  it( 'Adds slug to the front matter', async () => {
+  it('Adds slug to the front matter', async () => {
     expect(fileString).toContain(`slug: ${slug}`);
   });
-  it( 'Adds dates to the front matter', async () => {
+  it('Adds dates to the front matter', async () => {
     expect(fileString).toContain(`date: '${date}'`);
     expect(fileString).toContain(`modified: '${modified}'`);
   });
-  it( 'Adds excerpt to the front matter', async () => {
+  it('Adds excerpt to the front matter', async () => {
     expect(fileString).toContain(`excerpt: `);
   });
-  
 });
