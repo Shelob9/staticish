@@ -3,8 +3,8 @@ import "../styles/index.css";
 import Home from "../components/Sample";
 
 export default () => (
-  <div
-    className="
+	<div
+		className="
       flex
       flex-col
       column
@@ -14,7 +14,7 @@ export default () => (
       items-center 
       text-white
     "
-  >
-    <Home message="nextjs-typescript-tailwindcss-starter" />
-  </div>
+	>
+		<Home message="nextjs-typescript-tailwindcss-starter" />
+	</div>
 );
