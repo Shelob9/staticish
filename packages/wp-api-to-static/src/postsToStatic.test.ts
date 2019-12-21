@@ -44,7 +44,7 @@ describe('postsToStatic', () => {
   test('Limits per page', async () => {
     const data = await postsToStatic(
       {
-        endpoint: 'https://calderaforms.com/wp-json',
+        endpoint: 'http://localhost:8121/wp-json',
         perPage: 2,
         page: 2,
         postType: 'post',
@@ -57,7 +57,7 @@ describe('postsToStatic', () => {
   test('Writes the right content with front matter', async () => {
     const data = await postsToStatic(
       {
-        endpoint: 'https://calderaforms.com/wp-json',
+        endpoint: 'http://localhost:8121/wp-json',
         perPage: 1,
         page: 2,
         postType: 'post',
