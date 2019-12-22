@@ -35,7 +35,7 @@ export interface WpApiPost {
   meta: any;
   slug: string;
   guid: { rendered: string };
-  _links?: WpApi_links;
+  _links?: WpApi_links | any;
   sticky?: boolean;
   format?: string;
   categories?: Array<number>;

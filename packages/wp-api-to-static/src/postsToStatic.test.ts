@@ -3,8 +3,11 @@ import postsToStatic from './postsToStatic';
 describe('postsToStatic', () => {
   const fs = require('fs');
   const path = require('path');
-  const jsonPath = __dirname + '/test-json/';
-  const staticMarkdownpath = __dirname + '/test-markdown';
+  const jsonPath = path.join(__dirname, '../../../tests-write-here/test-json');
+  const staticMarkdownpath = path.join(
+    __dirname,
+    '../../../tests-write-here/test-markdown'
+  );
   beforeEach(() => {
     if (!fs.existsSync(staticMarkdownpath)) {
       fs.mkdirSync(staticMarkdownpath);

@@ -1,4 +1,4 @@
-import  writeToJSON  from './writeToJSON';
+import writeToJSON from './writeToJSON';
 
 const fs = require('fs');
 
@@ -74,7 +74,8 @@ const page = {
   },
 };
 describe('write to JSON', () => {
-  const jsonPath = __dirname + '/test-json/';
+  const path = require('path');
+  const jsonPath = path.join(__dirname, '../../../tests-write-here/test-json/');
   const pagePath = jsonPath + `page/${page.id}.json`;
   afterEach(() => {
     if (fs.existsSync(pagePath)) {
@@ -84,7 +85,7 @@ describe('write to JSON', () => {
   it('Writes a post to json', async () => {
     const { path } = await writeToJSON(page, jsonPath);
     expect(typeof path).toEqual('string');
-    expect(path).toEqual(pagePath);
-    expect(JSON.parse(fs.readFileSync(path))).toEqual(page);
+    expect(path.includes('page/118.json')).toBe(true);
+    expect(JSON.parse(fs.readFileSync(path))).toMatchObject(page);
   });
 });

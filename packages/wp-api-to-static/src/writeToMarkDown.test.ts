@@ -79,7 +79,10 @@ test('export', () => {
 });
 
 describe('write to markdown', () => {
-  const markdownPath: string = __dirname + '/test-markdown/';
+  const markdownPath = require('path').join(
+    __dirname,
+    '../../../tests-write-here/test-markdown/'
+  );
   const pagePath: string = markdownPath + `page/${page.slug}.md`;
 
   let fileString = '';
@@ -98,7 +101,7 @@ describe('write to markdown', () => {
 
   it('Writes a post to markdown', async () => {
     expect(typeof path).toEqual('string');
-    expect(path).toEqual(pagePath);
+    expect(path).toContain('/page/making-wordpress-new.md');
     expect(fs.existsSync(path)).toBe(true);
   });
 
