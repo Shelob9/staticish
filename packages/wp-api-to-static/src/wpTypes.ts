@@ -73,7 +73,7 @@ export interface WpApiUser {
   slug: string;
 }
 
-type sizes = {
+export interface WpApiMediaSizes {
   [key: string]: {
     width: number;
     height: number;
@@ -81,7 +81,7 @@ type sizes = {
     file: string;
     source_url: string;
   };
-};
+}
 
 /**
  * An item in WordPress media library, as returned by the WordPress REST API
@@ -89,6 +89,7 @@ type sizes = {
 export interface WpApiMedia {
   id: id;
   date: string;
+  slug: string;
   date_gmt: string;
   modified: string;
   modified_gmt: string;
@@ -107,7 +108,8 @@ export interface WpApiMedia {
     width: number;
     height: number;
     file: string;
-    sizes?: sizes;
+    sizes?: WpApiMediaSizes;
   };
   image_meta?: any;
+  source_url: string;
 }

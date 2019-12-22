@@ -1,4 +1,4 @@
-import writeToMarkDown from './writeToMarkDown';
+import writePostToMarkDown from './writeToMarkDown';
 import { WpApiPost } from './wpTypes';
 const fs = require('fs');
 
@@ -31,7 +31,7 @@ const page: WpApiPost = {
   comment_status: 'closed',
   ping_status: 'closed',
   template: '',
-  meta: { spay_email: '' },
+  meta: [{ spay_email: '' }],
   _links: {
     self: [{ href: 'https://make.wordpress.org/wp-json/wp/v2/pages/118' }],
     collection: [{ href: 'https://make.wordpress.org/wp-json/wp/v2/pages' }],
@@ -75,7 +75,7 @@ const page: WpApiPost = {
 };
 
 test('export', () => {
-  expect(typeof writeToMarkDown).toBe('function');
+  expect(typeof writePostToMarkDown).toBe('function');
 });
 
 describe('write to markdown', () => {
@@ -88,7 +88,7 @@ describe('write to markdown', () => {
   let fileString = '';
   let path: String = '';
   beforeAll(async () => {
-    const r = await writeToMarkDown(page, markdownPath);
+    const r = await writePostToMarkDown(page, markdownPath);
     path = r.path;
     fileString = fs.readFileSync(path).toString();
   });

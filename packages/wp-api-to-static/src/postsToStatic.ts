@@ -1,7 +1,7 @@
 import getWpPosts from './wp-api/getWpPosts';
-import writeToJSON from './writeToJson';
+import writePostToJSON from './writeToJson';
 import { WpApiPost } from './wpTypes';
-import writeToMarkDown from './writeToMarkDown';
+import writePostToMarkDown from './writeToMarkDown';
 
 /**
  * Arguments for writing content
@@ -60,8 +60,8 @@ async function postToStatic(
   const { wpJsonPath, markdownPath } = filePaths;
   return new Promise((resolve, reject) => {
     Promise.all([
-      writeToJSON(post, wpJsonPath),
-      writeToMarkDown(post, markdownPath),
+      writePostToJSON(post, wpJsonPath),
+      writePostToMarkDown(post, markdownPath),
     ])
       .then((results: Array<writeReturn>) => {
         resolve({

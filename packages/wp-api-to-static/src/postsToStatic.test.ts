@@ -3,21 +3,25 @@ import postsToStatic from './postsToStatic';
 describe('postsToStatic', () => {
   const fs = require('fs');
   const path = require('path');
-  const jsonPath = path.join(__dirname, '../../../tests-write-here/test-json');
+  const jsonPath = path.join(__dirname, '../../../tests-write-here/test-json/');
   const staticMarkdownpath = path.join(
     __dirname,
-    '../../../tests-write-here/test-markdown'
+    '../../../tests-write-here/test-markdown/'
   );
+  const types = ['post', 'page', 'tag', 'user', 'categories'];
   beforeEach(() => {
     if (!fs.existsSync(staticMarkdownpath)) {
       fs.mkdirSync(staticMarkdownpath);
     }
-    if (!fs.existsSync(staticMarkdownpath + '/page')) {
-      fs.mkdirSync(staticMarkdownpath + '/page');
-    }
-    if (!fs.existsSync(staticMarkdownpath + '/post')) {
-      fs.mkdirSync(staticMarkdownpath + '/post');
-    }
+
+    types.forEach(type => {
+      if (!fs.existsSync(staticMarkdownpath + type)) {
+        fs.mkdirSync(staticMarkdownpath + type);
+      }
+      if (!fs.existsSync(jsonPath + type)) {
+        fs.mkdirSync(jsonPath + type);
+      }
+    });
   });
 
   async function deleteDir(dir: string) {
@@ -34,10 +38,10 @@ describe('postsToStatic', () => {
   }
 
   afterEach(async () => {
-    await deleteDir(jsonPath + '/post');
-    await deleteDir(jsonPath + '/page');
-    await deleteDir(staticMarkdownpath + '/post');
-    await deleteDir(staticMarkdownpath + '/page');
+    types.forEach(async (type: string) => {
+      await deleteDir(jsonPath + type);
+      await deleteDir(staticMarkdownpath + type);
+    });
   });
 
   const filePathArgs = {

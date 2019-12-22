@@ -1,4 +1,4 @@
-import writeToJSON from './writeToJSON';
+import writePostToJSON from './writeToJson';
 
 const fs = require('fs');
 
@@ -31,7 +31,7 @@ const page = {
   comment_status: 'closed',
   ping_status: 'closed',
   template: '',
-  meta: { spay_email: '' },
+  meta: [{ spay_email: '' }],
   _links: {
     self: [{ href: 'https://make.wordpress.org/wp-json/wp/v2/pages/118' }],
     collection: [{ href: 'https://make.wordpress.org/wp-json/wp/v2/pages' }],
@@ -83,7 +83,7 @@ describe('write to JSON', () => {
     }
   });
   it('Writes a post to json', async () => {
-    const { path } = await writeToJSON(page, jsonPath);
+    const { path } = await writePostToJSON(page, jsonPath);
     expect(typeof path).toEqual('string');
     expect(path.includes('page/118.json')).toBe(true);
     expect(JSON.parse(fs.readFileSync(path))).toMatchObject(page);
