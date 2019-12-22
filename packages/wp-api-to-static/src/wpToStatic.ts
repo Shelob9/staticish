@@ -17,7 +17,13 @@ export default async function wpToStatic(
 ): Promise<Array<Array<wpToStaticReturn>>> {
   return new Promise(async (resolve, reject) => {
     const totals = await getTotals(apiUrl);
-    const { totalPosts, totalPages, perPage } = totals;
+    const {
+      totalPosts,
+      totalPages,
+      totalTags,
+      totalCategories,
+      perPage,
+    } = totals;
     const promises: Array<Promise<Array<wpToStaticReturn>>> = [];
     const makeContentArgs = (args: {
       postType: string;
@@ -49,6 +55,32 @@ export default async function wpToStatic(
             postType: 'page',
             perPage,
             page: pagePage,
+          }),
+          filePathArgs
+        )
+      );
+    }
+
+    for (let tagPage: number = 1; tagPage <= totalTags; tagPage++) {
+      promises.push(
+        postsToStatic(
+          makeContentArgs({
+            postType: 'tag',
+            perPage,
+            page: tagPage,
+          }),
+          filePathArgs
+        )
+      );
+    }
+
+    for (let catPage: number = 1; catPage <= totalCategories; catPage++) {
+      promises.push(
+        postsToStatic(
+          makeContentArgs({
+            postType: 'categories',
+            perPage,
+            page: catPage,
           }),
           filePathArgs
         )

@@ -1,18 +1,18 @@
 const superagent = require('superagent');
 
 /**
- * Get total number of posts of a post type on a WordPress
+ * Get total number of posts or terms of a type on a WordPress
  *
- * @param postType
+ * @param contentType
  * @param apiUrl
  */
 export const getTotal = async (
-  postType: string,
+  contentType: string,
   apiUrl: string
 ): Promise<{ total: number; perPage: number }> => {
   return new Promise((resolve, reject) => {
     return superagent
-      .get(`${apiUrl}/wp/v2/${postType}`)
+      .get(`${apiUrl}/wp/v2/${contentType}`)
       .set('accept', 'json')
       .end(
         (
@@ -37,7 +37,7 @@ export const getTotal = async (
 };
 
 /**
- * Get totals post count for all post types of a WordPress
+ * Get totals post count for all posts,pages,categories and tags
  *
  * LOL, only posts and page type.
  *
@@ -45,13 +45,26 @@ export const getTotal = async (
  */
 export const getTotals = async (
   apiUrl: string
-): Promise<{ totalPosts: number; totalPages: number; perPage: number }> => {
+): Promise<{
+  totalPosts: number;
+  totalPages: number;
+  totalTags: number;
+  totalCategories: number;
+  perPage: number;
+}> => {
   return new Promise((resolve, reject) => {
-    Promise.all([getTotal('posts', apiUrl), getTotal('pages', apiUrl)])
+    Promise.all([
+      getTotal('posts', apiUrl),
+      getTotal('pages', apiUrl),
+      getTotal('tags', apiUrl),
+      getTotal('categories', apiUrl),
+    ])
       .then((r: Array<{ total: number; perPage: number }>) => {
         resolve({
           totalPosts: r[0].total,
           totalPages: r[1].total,
+          totalTags: r[2].total,
+          totalCategories: r[3].total,
           perPage: r[0].perPage,
         });
       })
