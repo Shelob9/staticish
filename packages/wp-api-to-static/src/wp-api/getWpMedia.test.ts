@@ -1,6 +1,6 @@
 import getWpMedia, { getWpMediaItem } from './getWpMedia';
 
-describe('getWpUsers', () => {
+describe('Get wp ', () => {
   test('Limits per page', async () => {
     const data = await getWpMedia({
       endpoint: 'http://localhost:8121/wp-json',

@@ -147,7 +147,7 @@ export async function writeUserToMarkDown(
     try {
       const string = `${yaml.safeDump(userToFrontMatter(user), {
         indent: 4,
-      })}\n\n ---`;
+      })}`;
       await fs.writeFileSync(path, string);
       resolve({
         path,
@@ -177,7 +177,7 @@ export async function writeTermToMarkDown(
     try {
       const string = `${yaml.safeDump(termToFrontMatterObject(term), {
         indent: 4,
-      })}\n\n ---`;
+      })}`;
       await fs.writeFileSync(path, string);
       resolve({
         path,
@@ -207,7 +207,7 @@ export async function writeMediaToMarkDown(
     try {
       const string = `${yaml.safeDump(mediaToFrontMatterObject(media), {
         indent: 4,
-      })}\n\n ---`;
+      })}`;
       await fs.writeFileSync(path, string);
       resolve({
         path,

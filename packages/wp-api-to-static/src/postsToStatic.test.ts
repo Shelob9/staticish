@@ -8,7 +8,7 @@ describe('postsToStatic', () => {
     __dirname,
     '../../../tests-write-here/test-markdown/'
   );
-  const types = ['post', 'page', 'tag', 'user', 'categories'];
+  const types = ['post', 'page', 'tag', 'user', 'categories', 'media'];
   beforeEach(() => {
     if (!fs.existsSync(staticMarkdownpath)) {
       fs.mkdirSync(staticMarkdownpath);
@@ -23,7 +23,6 @@ describe('postsToStatic', () => {
       }
     });
   });
-
   async function deleteDir(dir: string) {
     return fs.readdir(dir, (err: Error, files: Array<string>) => {
       if (err) throw err;
@@ -43,7 +42,6 @@ describe('postsToStatic', () => {
       await deleteDir(staticMarkdownpath + type);
     });
   });
-
   const filePathArgs = {
     wpJsonPath: jsonPath,
     markdownPath: staticMarkdownpath,

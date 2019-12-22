@@ -1,7 +1,13 @@
-import getWpPosts from './wp-api/getWpPosts';
-import writePostToJSON from './writeToJson';
+import { getWpPosts, getWpMediaItem, getWpUser } from './wp-api';
+import writePostToJSON, {
+  writeUserToJSON,
+  writeMediaToJSON,
+} from './writeToJson';
 import { WpApiPost } from './wpTypes';
-import writePostToMarkDown from './writeToMarkDown';
+import writePostToMarkDown, {
+  writeUserToMarkDown,
+  writeMediaToMarkDown,
+} from './writeToMarkDown';
 
 /**
  * Arguments for writing content
@@ -47,6 +53,46 @@ export type filePathArgs = {
   markdownPath: string;
 };
 
+async function userToStatic(
+  id: number,
+  filePaths: filePathArgs,
+  endpoint: string
+): Promise<boolean> {
+  return new Promise(async (resolve, reject) => {
+    const { markdownPath, wpJsonPath } = filePaths;
+    const user = await getWpUser({ endpoint, id });
+    Promise.all([
+      writeUserToJSON(user, wpJsonPath),
+      writeUserToMarkDown(user, markdownPath),
+    ])
+      .then(() => resolve(true))
+      .catch(() => reject(false));
+  });
+}
+
+async function mediaToStatic(
+  id: number | undefined,
+  filePaths: filePathArgs,
+  endpoint: string
+): Promise<boolean> {
+  if (!id || id === undefined) {
+    return new Promise(async resolve => {
+      resolve(true);
+    });
+  }
+
+  return new Promise(async (resolve, reject) => {
+    const { markdownPath, wpJsonPath } = filePaths;
+    const media = await getWpMediaItem({ endpoint, id: id as number });
+    Promise.all([
+      writeMediaToJSON(media, wpJsonPath),
+      writeMediaToMarkDown(media, markdownPath),
+    ])
+      .then(() => resolve(true))
+      .catch(() => reject(false));
+  });
+}
+
 /**
  * Convert one post to static
  *
@@ -87,11 +133,17 @@ export default async function postsToStatic(
   contentArgs: contentArgs,
   filePaths: filePathArgs
 ): Promise<Array<wpToStaticReturn>> {
+  const { endpoint } = contentArgs;
   const posts = await getWpPosts(contentArgs);
   return new Promise((resolve, reject) => {
     Promise.all(
-      posts.map((post: WpApiPost) => {
-        return postToStatic(post, filePaths);
+      posts.map(async (post: WpApiPost) => {
+        const rData = postToStatic(post, filePaths);
+        await Promise.all([
+          mediaToStatic(post.featured_media, filePaths, endpoint),
+          userToStatic(post.author, filePaths, endpoint),
+        ]);
+        return rData;
       })
     )
       .then((results: Array<wpToStaticReturn>) => {
