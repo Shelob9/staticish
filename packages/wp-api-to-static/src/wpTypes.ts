@@ -56,3 +56,18 @@ export interface WpApiTaxonomy {
   meta?: Array<any>;
   _links?: WpApi_links;
 }
+
+type avatars = { [key: number]: string };
+
+/**
+ * A WordPress user, as returned by the WordPress REST API
+ */
+export interface WpApiUser {
+  avatar_urls: avatars;
+  id: id;
+  name: string;
+  url: string;
+  description: string;
+  link: string;
+  slug: string;
+}
