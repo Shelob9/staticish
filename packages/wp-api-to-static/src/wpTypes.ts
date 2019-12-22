@@ -10,6 +10,7 @@ export interface ContentObject {
 type WpApi_links = Array<{ [key: string]: { href: string } }>;
 
 type id = number;
+
 /**
  * A WordPress post, as returned by the WordPress REST API
  */
@@ -22,17 +23,17 @@ export interface WpApiPost {
   status: string;
   type: string;
   link: string;
+  author: number;
   title: ContentObject;
   content: ContentObject;
   excerpt: ContentObject;
-  author: Number;
-  featured_media: Number;
-  parent?: Number;
-  menu_order?: Number;
   comment_status: string;
   ping_status: string;
+  meta: Array<any>;
+  featured_media: number;
+  parent?: number;
+  menu_order?: number;
   template: string;
-  meta: any;
   slug: string;
   guid: { rendered: string };
   _links?: WpApi_links | any;
@@ -70,4 +71,43 @@ export interface WpApiUser {
   description: string;
   link: string;
   slug: string;
+}
+
+type sizes = {
+  [key: string]: {
+    width: number;
+    height: number;
+    mime_type: string;
+    file: string;
+    source_url: string;
+  };
+};
+
+/**
+ * An item in WordPress media library, as returned by the WordPress REST API
+ */
+export interface WpApiMedia {
+  id: id;
+  date: string;
+  date_gmt: string;
+  modified: string;
+  modified_gmt: string;
+  status: string;
+  type: string;
+  link: string;
+  author: number;
+  post?: number;
+  title: ContentObject;
+  description: ContentObject;
+  caption: ContentObject;
+  alt_text: string;
+  media_type: string;
+  mime_type: string;
+  media_detials?: {
+    width: number;
+    height: number;
+    file: string;
+    sizes?: sizes;
+  };
+  image_meta?: any;
 }
