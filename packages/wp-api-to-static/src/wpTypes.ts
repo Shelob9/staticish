@@ -5,10 +5,16 @@ export interface ContentObject {
 }
 
 /**
+ * The _links key of WP API response
+ */
+type WpApi_links = Array<{ [key: string]: { href: string } }>;
+
+type id = number;
+/**
  * A WordPress post, as returned by the WordPress REST API
  */
 export interface WpApiPost {
-  id: Number;
+  id: id;
   date: string;
   date_gmt: string;
   modified: string;
@@ -29,9 +35,24 @@ export interface WpApiPost {
   meta: any;
   slug: string;
   guid: { rendered: string };
-  _links?: any;
+  _links?: WpApi_links;
   sticky?: boolean;
   format?: string;
   categories?: Array<number>;
   tags?: Array<number>;
+}
+
+/**
+ * A WordPress taxonomy, as returned by the WordPress REST API
+ */
+export interface WpApiTaxonomy {
+  id: id;
+  count: number;
+  description: string;
+  link: string;
+  name: string;
+  slug: string;
+  taxonomy: string;
+  meta?: Array<any>;
+  _links?: WpApi_links;
 }

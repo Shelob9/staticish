@@ -2,35 +2,57 @@ import getWpPosts from './wp-api/getWpPosts';
 import writeToJSON from './writeToJson';
 import { WpApiPost } from './wpTypes';
 import writeToMarkDown from './writeToMarkDown';
+
+/**
+ * Arguments for writing content
+ */
 export type contentArgs = {
-  endpoint: String;
-  perPage: Number;
-  page: Number;
+  endpoint: string;
+  perPage: number;
+  page: number;
+  //Post type or content type being stored
   postType: string;
 };
 
+/**
+ * Object returned after writing a bit of content
+ */
 export type writeReturn = {
-  path: String;
-  id: Number;
-  slug: String;
-  type: String;
-  title: String;
+  path: string;
+  id: number;
+  slug: string;
+  type: string;
+  title: string;
 };
 
+/**
+ *
+ */
 export type wpToStaticReturn = {
-  markdownPath: String;
-  jsonPath: String;
-  id: Number;
-  slug: String;
-  type: String;
-  title: String;
+  markdownPath: string;
+  jsonPath: string;
+  id: number;
+  slug: string;
+  type: string;
+  title: string;
 };
 
+/**
+ * Arguments for base paths for writing static content to
+ */
 export type filePathArgs = {
+  //Directory to write JSON files
   wpJsonPath: string;
+  // Directory to write markdown files
   markdownPath: string;
 };
 
+/**
+ * Convert one post to static
+ *
+ * @param post
+ * @param filePaths
+ */
 async function postToStatic(
   post: WpApiPost,
   filePaths: filePathArgs
