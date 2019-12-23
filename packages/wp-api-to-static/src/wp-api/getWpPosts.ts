@@ -2,6 +2,38 @@ const WPAPI = require('wpapi');
 
 import { WpApiPost } from '../wpTypes';
 import { contentArgs } from '../postsToStatic';
+import { getItemArgs } from './types';
+
+/**
+ * Get a single post from a WordPress site
+ *
+ * @param args
+ */
+export async function getWpPost(
+  args: getItemArgs,
+  postType: 'post' | 'page'
+): Promise<WpApiPost> {
+  const { endpoint, id } = args;
+  let wp = new WPAPI({ endpoint: endpoint });
+  return new Promise((resolve, reject) => {
+    switch (postType) {
+      case 'page':
+        wp = wp.pages();
+        break;
+      default:
+        wp = wp.posts();
+        break;
+    }
+
+    wp.id(id).get(function(err: Error, data: WpApiPost) {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(data);
+    });
+  });
+}
 
 export default async function getWpPosts(
   args: contentArgs

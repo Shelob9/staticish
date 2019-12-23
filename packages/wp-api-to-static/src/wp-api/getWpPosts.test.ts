@@ -1,4 +1,4 @@
-import getWpPosts from './getWpPosts';
+import getWpPosts, { getWpPost } from './getWpPosts';
 
 describe('getWpPosts', () => {
   test('Limits per page', async () => {
@@ -47,5 +47,20 @@ describe('getWpPosts', () => {
       dataPage2[0].title.rendered
     );
     expect(dataPage1[0].slug).not.toEqual(dataPage2[0].slug);
+  });
+});
+
+describe('Single post', () => {
+  it('gets a post', async () => {
+    const endpoint = 'http://localhost:8121/wp-json';
+    const posts = await getWpPosts({
+      endpoint,
+      perPage: 5,
+      page: 1,
+      postType: 'post',
+    });
+    const post = await getWpPost({ endpoint, id: posts[1].id }, 'post');
+    expect(post.id).toEqual(posts[1].id);
+    expect(post.title.rendered).toEqual(posts[1].title.rendered);
   });
 });
