@@ -1,5 +1,4 @@
-const WPAPI = require('wpapi');
-
+import { getWpClient } from '.';
 import { WpApiPost } from '../wpTypes';
 import { contentArgs } from '../postsToStatic';
 import { getItemArgs } from './types';
@@ -14,7 +13,7 @@ export async function getWpPost(
   postType: 'post' | 'page'
 ): Promise<WpApiPost> {
   const { endpoint, id } = args;
-  let wp = new WPAPI({ endpoint: endpoint });
+  let wp = getWpClient(endpoint, {});
   return new Promise((resolve, reject) => {
     switch (postType) {
       case 'page':
@@ -41,7 +40,7 @@ export default async function getWpPosts(
   const { endpoint, perPage } = args;
   const page = args.page ? args.page : 1;
   const postType = args.postType ? args.postType : 'post';
-  let wp = new WPAPI({ endpoint: endpoint });
+  let wp = getWpClient(endpoint, {});
   return new Promise((resolve, reject) => {
     switch (postType) {
       case 'page':

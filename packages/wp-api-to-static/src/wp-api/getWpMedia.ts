@@ -1,5 +1,4 @@
-const WPAPI = require('wpapi');
-
+import { getWpClient } from '.';
 import { WpApiMedia } from '../wpTypes';
 import { contentArgs } from '../postsToStatic';
 import { getItemArgs } from './types';
@@ -13,7 +12,7 @@ import { getItemArgs } from './types';
 export async function getWpMediaItem(args: getItemArgs): Promise<WpApiMedia> {
   const { endpoint, id } = args;
 
-  let wp = new WPAPI({ endpoint: endpoint });
+  let wp = getWpClient(endpoint, {});
   return new Promise((resolve, reject) => {
     wp.media()
       .id(id)
@@ -40,7 +39,7 @@ export default async function getWpMedia(
   const { endpoint, perPage } = args;
   const page = args.page ? args.page : 1;
 
-  let wp = new WPAPI({ endpoint: endpoint });
+  let wp = getWpClient(endpoint, {});
   return new Promise((resolve, reject) => {
     wp.media()
       .perPage(perPage)

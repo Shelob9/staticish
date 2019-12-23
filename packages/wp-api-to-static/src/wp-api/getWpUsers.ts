@@ -1,4 +1,4 @@
-const WPAPI = require('wpapi');
+import { getWpClient } from '.';
 
 import { WpApiUser } from '../wpTypes';
 import { contentArgs } from '../postsToStatic';
@@ -11,7 +11,7 @@ import { getItemArgs } from './types';
  */
 export async function getWpUser(args: getItemArgs): Promise<WpApiUser> {
   const { endpoint, id } = args;
-  let wp = new WPAPI({ endpoint: endpoint });
+  let wp = getWpClient(endpoint, {});
   return new Promise((resolve, reject) => {
     wp.users()
       .id(id)
@@ -36,7 +36,7 @@ export default async function getWpUsers(
   const { endpoint, perPage } = args;
   const page = args.page ? args.page : 1;
 
-  let wp = new WPAPI({ endpoint: endpoint });
+  let wp = getWpClient(endpoint, {});
   return new Promise((resolve, reject) => {
     wp.users()
       .perPage(perPage)
