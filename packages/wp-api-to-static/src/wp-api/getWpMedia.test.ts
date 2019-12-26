@@ -3,7 +3,7 @@ import getWpMedia, { getWpMediaItem } from './getWpMedia';
 describe('Get wp ', () => {
   test('Limits per page', async () => {
     const data = await getWpMedia({
-      endpoint: 'http://localhost:8121/wp-json',
+      endpoint: 'http://localhost:3100/wp-json',
       perPage: 2,
       page: 1,
       postType: 'media',
@@ -13,7 +13,7 @@ describe('Get wp ', () => {
 
   test('single item', async () => {
     const medias = await getWpMedia({
-      endpoint: 'http://localhost:8121/wp-json',
+      endpoint: 'http://localhost:3100/wp-json',
       perPage: 2,
       page: 1,
       postType: 'media',
@@ -21,7 +21,7 @@ describe('Get wp ', () => {
 
     const id = medias[1].id;
     const media = await getWpMediaItem({
-      endpoint: 'http://localhost:8121/wp-json',
+      endpoint: 'http://localhost:3100/wp-json',
       id,
     });
     expect(media.id).toEqual(id);

@@ -3,7 +3,7 @@ import getWpPosts, { getWpPost } from './getWpPosts';
 describe('getWpPosts', () => {
   test('Limits per page', async () => {
     const data = await getWpPosts({
-      endpoint: 'http://localhost:8121/wp-json',
+      endpoint: 'http://localhost:3100/wp-json',
       perPage: 5,
       page: 1,
       postType: 'post',
@@ -13,13 +13,13 @@ describe('getWpPosts', () => {
 
   test('Gets the right post type', async () => {
     const pages = await getWpPosts({
-      endpoint: 'http://localhost:8121/wp-json',
+      endpoint: 'http://localhost:3100/wp-json',
       perPage: 5,
       page: 2,
       postType: 'page',
     });
     const posts = await getWpPosts({
-      endpoint: 'http://localhost:8121/wp-json',
+      endpoint: 'http://localhost:3100/wp-json',
       perPage: 5,
       page: 1,
       postType: 'post',
@@ -31,13 +31,13 @@ describe('getWpPosts', () => {
 
   test('Paginates', async () => {
     const dataPage2 = await getWpPosts({
-      endpoint: 'http://localhost:8121/wp-json',
+      endpoint: 'http://localhost:3100/wp-json',
       perPage: 5,
       page: 2,
       postType: 'post',
     });
     const dataPage1 = await getWpPosts({
-      endpoint: 'http://localhost:8121/wp-json',
+      endpoint: 'http://localhost:3100/wp-json',
       perPage: 5,
       page: 1,
       postType: 'post',
@@ -52,7 +52,7 @@ describe('getWpPosts', () => {
 
 describe('Single post', () => {
   it('gets a post', async () => {
-    const endpoint = 'http://localhost:8121/wp-json';
+    const endpoint = 'http://localhost:3100/wp-json';
     const posts = await getWpPosts({
       endpoint,
       perPage: 5,
