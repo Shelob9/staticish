@@ -6,8 +6,7 @@ import PostContent, { renderPropForContent } from './PostContent';
 import FeaturedImage, { renderFeaturedImage } from './FeaturedImage';
 import PostHeader from './PostHeader';
 import { PostAuthor, Image } from './types';
-import { IconButton } from '@wordpress/components';
-import { Post } from '@staticish/wp-api-to-static';
+import { WpPost } from './wpTypes';
 function AuthorProfile(props: { author: PostAuthor }) {
   const { author } = props;
   const { avatar, name, description, link } = author;
@@ -61,12 +60,12 @@ function PostTitle(props: { title: string }) {
  */
 export type renderTitleProps = {
   title: string;
-  post: Post;
+  post: WpPost;
 };
 type renderPropForTitle = (props: renderTitleProps) => JSX.Element;
 
 export function PostTop(props: {
-  post: Post;
+  post: WpPost;
   renderTitle?: (props: renderTitleProps) => JSX.Element;
   editMode?: boolean;
   onClickSettings?: () => void;
@@ -74,7 +73,7 @@ export function PostTop(props: {
   renderFeatured?: renderFeaturedImage;
 }) {
   const { post, onClickSettings, renderFeatured } = props;
-  const { title } = post;
+  const { title, published } = post;
   const featured: Image = {
     src: 'http://placekitten.com/1280/640',
     alt: 'A cat',
@@ -110,11 +109,7 @@ export function PostTop(props: {
           </div>
           {onClickSettings && (
             <div className={'inline-block'}>
-              <IconButton
-                icon={'admin-generic'}
-                label={'Settings'}
-                onClick={onClickSettings}
-              />
+              <button onClick={onClickSettings}>Settings</button>
             </div>
           )}
         </div>
@@ -123,7 +118,7 @@ export function PostTop(props: {
   );
 }
 export default function(props: {
-  post: Post;
+  post: WpPost;
   renderTitle?: renderPropForTitle;
   renderContent?: renderPropForContent;
   onClickSettings?: () => void;

@@ -1,6 +1,26 @@
 import postsToStatic from './postsToStatic';
 import wpToStatic from './wpToStatic';
 import htmlToMarkdown from './htmlToMarkdown';
-import getWpPosts from './wp-api/getWpPosts';
+import {
+  getWpPost,
+  getWpPosts,
+  getWpUsers,
+  getWpUser,
+  getWpTerms,
+  getWpMedia,
+  getWpMediaItem,
+} from './wp-api';
+
 export { WpApiPost, ContentObject } from './wpTypes';
-export { postsToStatic, wpToStatic, htmlToMarkdown, getWpPosts };
+export {
+  postsToStatic,
+  wpToStatic,
+  htmlToMarkdown,
+  getWpPost,
+  getWpPosts,
+  getWpUsers,
+  getWpUser,
+  getWpTerms,
+  getWpMedia,
+  getWpMediaItem,
+};

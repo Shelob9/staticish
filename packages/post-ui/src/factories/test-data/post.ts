@@ -26,28 +26,9 @@ export default {
   sticky: false,
   template: '',
   format: 'standard',
-  meta: {
-    edd_variable_prices: [],
-    _edd_bundled_products: [],
-    _edd_button_behavior: [],
-  },
+  meta: [],
   categories: [174],
   tags: [],
-  caldera_admin_help: [],
-  caldera_doc_overview: [],
-  cfdc_image: {
-    ID: 168887,
-    html:
-      '<img width="660" height="440" src="https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141-1024x683.jpg" class="attachment-large size-large" alt="CF Show Pro UI" srcset="https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141-1024x683.jpg 1024w, https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141-300x200.jpg 300w, https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141-768x512.jpg 768w, https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141-1536x1025.jpg 1536w, https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141-2048x1366.jpg 2048w" sizes="(max-width: 660px) 100vw, 660px" />',
-    url:
-      'https://calderaforms.com/wp-content/uploads/edd/2016/11/mark-viewed.png',
-    width: '1200',
-    height: '437',
-    srcset:
-      'https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141-300x200.jpg 300w, https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141-1024x683.jpg 1024w, https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141-768x512.jpg 768w, https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141-1536x1025.jpg 1536w, https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141-2048x1366.jpg 2048w',
-    sizes: '(max-width: 150px) 100vw, 150px',
-    alt: 'CF Show Pro UI',
-  },
   _links: {
     self: [{ href: 'https://calderaforms.com/wp-json/wp/v2/posts/168826' }],
     collection: [{ href: 'https://calderaforms.com/wp-json/wp/v2/posts' }],

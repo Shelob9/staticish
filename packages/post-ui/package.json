@@ -47,6 +47,9 @@
   },
   "dependencies": {
     "@testing-library/react": "^9.4.0",
+    "@types/wordpress__block-serialization-default-parser": "^3.2.0",
+    "@types/wordpress__components": "^8.2.1",
+    "@wordpress/block-serialization-default-parser": "^3.4.1",
     "@wordpress/components": "^8.5.0"
   }
 }

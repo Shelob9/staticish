@@ -3,14 +3,14 @@ import Article from './Primative/Article';
 import PostFooter from './PostFooter';
 import PostExcerpt from './PostExcerpt';
 import PostHeader from './PostHeader';
-import { Post } from '@staticish/wp-api-to-static';
+import { WpPost } from './wpTypes';
 
 /**
  * Show a preview of a post with zoomable featured image
  *
  * @param props
  */
-export default function(props: { post: Post; tw?: string; link: string }) {
+export default function(props: { post: WpPost; tw?: string; link: string }) {
   const { post, tw, link } = props;
   const { title, excerpt } = post;
 

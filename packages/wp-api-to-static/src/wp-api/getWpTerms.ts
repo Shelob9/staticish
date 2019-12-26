@@ -1,5 +1,4 @@
-const WPAPI = require('wpapi');
-
+import { getWpClient } from './index';
 import { WpApiTaxonomy } from '../wpTypes';
 import { contentArgs } from '../postsToStatic';
 
@@ -16,7 +15,7 @@ export default async function getWpTerms(
   const { endpoint, perPage } = args;
   const page = args.page ? args.page : 1;
   const taxonomy = args.postType ? args.postType : 'tag';
-  let wp = new WPAPI({ endpoint: endpoint });
+  let wp = getWpClient(endpoint, {});
   return new Promise((resolve, reject) => {
     switch (taxonomy) {
       case 'post_tag':

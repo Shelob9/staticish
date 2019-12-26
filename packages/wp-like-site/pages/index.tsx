@@ -1,9 +1,8 @@
 import * as React from "react";
 import "../styles/index.css";
 import Home from "../components/Sample";
-import { Box } from "@staticish/post-ui";
 export default () => (
-	<Box
+	<div
 		className="
       flex
       flex-col
@@ -16,5 +15,5 @@ export default () => (
     "
 	>
 		<Home message="nextjs-typescript-tailwindcss-starter" />
-	</Box>
+	</div>
 );
