@@ -5,7 +5,7 @@ import { BlogPostPreview } from "./wp-ui";
 import { WpPost } from "./wp-ui/wpTypes";
 import { fetchPosts } from "../fetch/wordpress";
 import { getRemotePost, RemotePostProps } from "./RemotePost";
-import { WpApiPost, postsToStatic } from "@staticish/wp-api-to-static";
+import { WpApiPost } from "@staticish/wp-api-to-static";
 
 export type RemotePostsProps = {
 	posts: Array<WpPost>;

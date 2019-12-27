@@ -10,7 +10,7 @@ import fetch from "isomorphic-unfetch";
 export const fetchUsers = async (
 	endpoint: string,
 	page: number = 1
-): Promise<WpApiUser> => {
+): Promise<Array<WpApiUser>> => {
 	return fetch(`${endpoint}/wp/v2/users?page=${page}`).then(r => r.json());
 };
 
