@@ -6,24 +6,21 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "yarn lerna run --parallel test",
-		"test:ui": "yarn workspace @staticish/post-ui test",
 		"test:static": "yarn workspace @staticish/wp-api-to-static test",
 		"test:site": "yarn workspace @staticish/wp-like-site test",
 		"lint": "yarn workspaces run lint",
 		"build": "yarn lerna run --parallel build",
-		"build:ui": "yarn workspace @staticish/post-ui build",
 		"build:static": "yarn workspace @staticish/wp-api-to-static build",
 		"build:site": "yarn workspace @staticish/wp-like-site build",
 		"add:ui": "yarn workspace @staticish/post-ui add",
 		"add:static": "yarn workspace @staticish/wp-api-to-static add",
 		"add:site": "yarn workspace @staticish/wp-like-site add",
 		"start": "yarn lerna run --parallel start",
-		"start:ui": "yarn workspace @staticish/post-ui start",
 		"start:static": "yarn workspace @staticish/wp-api-to-static start",
 		"start:site": "yarn workspace @staticish/wp-like-site start",
 		"bootstrap": "lerna bootstrap",
 		"release": "lerna publish",
-		"storybook": "yarn workspace @staticish/post-ui storybook"
+		"storybook": "yarn workspace @staticish/wp-like-site storybook"
 	},
 	"repository": {
 		"type": "git",

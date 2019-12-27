@@ -1,8 +1,8 @@
 import React from "react";
-import { NextPageContext } from "next";
 import getConfig from "next/config";
 
-import { BlogPost, wpFactory, WpPost } from "@staticish/post-ui";
+import { BlogPost, wpFactory } from "./wp-ui";
+import { WpPost } from "./wp-ui/wpTypes";
 import {
 	fetchPost,
 	fetchAuthor,
@@ -15,6 +15,12 @@ export type RemotePostProps = {
 	endpoint: string;
 };
 
+/**
+ * Get a post by slug
+ *
+ * @param slug
+ * @param endpoint
+ */
 export const getRemotePost = async (
 	slug: string,
 	endpoint: string
