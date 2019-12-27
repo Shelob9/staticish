@@ -5,6 +5,7 @@ import RemotePost, {
 	getRemotePost,
 	RemotePostProps
 } from "../../components/RemotePost";
+import "../../styles/index.css";
 
 const Post = (props: RemotePostProps) => {
 	const [post, setPost] = React.useState(props.wpLikePost);
