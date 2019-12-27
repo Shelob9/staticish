@@ -28,8 +28,9 @@ export const fetchPosts = async (
 	endpoint: string,
 	page: number = 1,
 	postType: string = "post"
-): Promise<WpApiPost> => {
-	return fetch(`${endpoint}/wp/v2/${postType}?page=${page}`)
-		.then(r => r.json())
-		.then((r: Array<WpApiPost>) => r[0]);
+): Promise<Array<WpApiPost>> => {
+	postType = "post" === postType ? "posts" : postType;
+	return fetch(`${endpoint}/wp/v2/${postType}?page=${page}`).then(r =>
+		r.json()
+	);
 };

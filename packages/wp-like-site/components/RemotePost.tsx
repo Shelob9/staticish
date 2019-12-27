@@ -9,6 +9,7 @@ import {
 	fetchFeatured,
 	fetchTags
 } from "../fetch/wordpress";
+import { WpApiPost, WpApiMedia } from "@staticish/wp-api-to-static";
 
 export type RemotePostProps = {
 	wpLikePost: WpPost;
@@ -27,7 +28,15 @@ export const getRemotePost = async (
 ): Promise<RemotePostProps> => {
 	const post = await fetchPost(slug as string, endpoint);
 	const author = await fetchAuthor(post.author, endpoint);
-	const featured = await fetchFeatured(post.featured_media, endpoint);
+	let featured: WpApiMedia | undefined = undefined;
+	if (post.featured_media) {
+		try {
+			featured = await fetchFeatured(post.featured_media, endpoint);
+		} catch {
+			(e: Error) => console.log(e);
+		}
+	}
+
 	const tags = await fetchTags(post.tags as Array<number>, endpoint);
 	const published = post.date;
 

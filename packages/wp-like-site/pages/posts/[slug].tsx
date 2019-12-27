@@ -1,27 +1,12 @@
 import React from "react";
 import { NextPageContext } from "next";
 import getConfig from "next/config";
-import RemotePost, {
-	getRemotePost,
-	RemotePostProps
-} from "../../components/RemotePost";
+import RemotePost, { RemotePostProps } from "../../components/RemotePost";
 import "../../styles/index.css";
 
-const Post = (props: RemotePostProps) => {
-	const [post, setPost] = React.useState(props.wpLikePost);
-	React.useEffect(() => {
-		const { publicRuntimeConfig } = getConfig();
-		const { endpoint } = publicRuntimeConfig;
-		if (!post) {
-			getRemotePost(
-				props.wpLikePost.slug,
-				endpoint
-			).then((p: RemotePostProps) => setPost(p.wpLikePost));
-		}
-	}, [post]);
-
-	return <RemotePost wpLikePost={post} endpoint={props.endpoint} />;
-};
+const Post = (props: RemotePostProps) => (
+	<RemotePost wpLikePost={props.wpLikePost} endpoint={props.endpoint} />
+);
 
 Post.getInitialProps = async (ctx: NextPageContext) => {
 	return RemotePost.getInitialProps({
