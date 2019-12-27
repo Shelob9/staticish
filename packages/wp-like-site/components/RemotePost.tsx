@@ -33,7 +33,7 @@ export const getRemotePost = async (
 
 	const factory = wpFactory({
 		author: () => author,
-		featured: () => featured,
+		featured: () => featured || undefined,
 		tags: () => tags,
 		published: () => published
 	});

@@ -12,7 +12,7 @@ import {
  */
 export type wpFactoryGetters = {
 	author: (authorId: number) => WpApiUser;
-	featured: (featureId: number) => WpApiMedia;
+	featured: (featureId: number) => WpApiMedia | undefined;
 	tags: (tagIds: Array<number>) => Array<WpApiTaxonomy>;
 	published: (published: string) => string;
 };
@@ -84,14 +84,14 @@ export const authorFromWpApi = (fromApi: WpApiUser): PostAuthor => {
  */
 const wpPost = (fromApi: WpApiPost, getters: wpFactoryGetters): WpPost => {
 	const { id, slug, content, title, excerpt } = fromApi;
-
+	const featured = getters.featured(fromApi.featured_media);
 	return {
 		id: id.toString(),
 		slug,
 		title,
 		content,
 		excerpt,
-		featured: featuredFromWpApi(getters.featured(fromApi.featured_media)),
+		featured: featured ? featuredFromWpApi(featured) : undefined,
 		author: authorFromWpApi(getters.author(fromApi.author)),
 		published: getters.published(fromApi.date),
 		tags: tagsFromWpApi(getters.tags(fromApi.tags ? fromApi.tags : []))

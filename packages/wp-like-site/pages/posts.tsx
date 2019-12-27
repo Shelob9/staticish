@@ -6,7 +6,6 @@ import { withRouter } from "next/router";
 //@ts-ignore
 function Post({ router }) {
 	console.log(router);
-
 	return <p>{router.pathname}</p>;
 }
 
