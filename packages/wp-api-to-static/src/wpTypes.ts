@@ -104,7 +104,7 @@ export interface WpApiMedia {
   alt_text: string;
   media_type: string;
   mime_type: string;
-  media_detials?: {
+  media_details?: {
     width: number;
     height: number;
     file: string;

@@ -11,7 +11,14 @@ import {
   getWpMediaItem,
 } from './wp-api';
 
-export { WpApiPost, ContentObject } from './wpTypes';
+export {
+  WpApiPost,
+  ContentObject,
+  WpApiMedia,
+  WpApiUser,
+  WpApiTaxonomy,
+} from './wpTypes';
+
 export {
   postsToStatic,
   wpToStatic,

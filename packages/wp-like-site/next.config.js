@@ -1,4 +1,14 @@
 // next.config.js
 const withCSS = require("@zeit/next-css");
-const withTypescript = require("@zeit/next-typescript");
-module.exports = withTypescript(withCSS({}));
+const endpoint = "http://localhost:3100/wp-json";
+module.exports = {
+	...{
+		serverRuntimeConfig: {
+			endpoint
+		},
+		publicRuntimeConfig: {
+			endpoint
+		}
+	},
+	...withCSS()
+};

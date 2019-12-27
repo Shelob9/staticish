@@ -5,28 +5,38 @@ import {
   WpApiUser,
   WpApiMedia,
   WpApiTaxonomy,
-} from '@staticish/wp-api-to-static/dist/wpTypes';
+} from '@staticish/wp-api-to-static';
 
 /**
  * Getters for data not included in the WP-API post response
  */
-type getters = {
-  author: (post: WpApiPost) => WpApiUser;
-  featured: (post: WpApiPost) => WpApiMedia;
-  tags: (post: WpApiPost) => Array<WpApiTaxonomy>;
-  published: (post: WpApiPost) => string;
+export type wpFactoryGetters = {
+  author: (authorId: number) => WpApiUser;
+  featured: (featureId: number) => WpApiMedia;
+  tags: (tagIds: Array<number>) => Array<WpApiTaxonomy>;
+  published: (published: string) => string;
 };
 
-export const wpTag = (fromApi: WpApiTaxonomy): tag => {
+/**
+ *
+ * @param fromApi
+ */
+export const tagFromWpApi = (fromApi: WpApiTaxonomy): tag => {
   return {
     label: fromApi.name,
     slug: fromApi.slug,
   };
 };
 
-export const wpTags = (fromApi: Array<WpApiTaxonomy>): Array<tag> => {
-  return fromApi.map(wpTag);
+/**
+ * Format a collection of tags
+ *
+ * @param fromApi
+ */
+export const tagsFromWpApi = (fromApi: Array<WpApiTaxonomy>): Array<tag> => {
+  return fromApi.map(tagFromWpApi);
 };
+
 const findAvatar = (fromApi: WpApiUser): Image => {
   const avatars = fromApi.avatar_urls;
   const sizes = Object.keys(avatars).map((key: string) => parseInt(key, 10));
@@ -41,7 +51,7 @@ const findAvatar = (fromApi: WpApiUser): Image => {
  * Format featured image object
  * @param fromApi
  */
-export const wpFeatured = (fromApi: WpApiMedia): WpMedia => {
+export const featuredFromWpApi = (fromApi: WpApiMedia): WpMedia => {
   return {
     src: fromApi.source_url,
     alt: fromApi.alt_text,
@@ -54,7 +64,7 @@ export const wpFeatured = (fromApi: WpApiMedia): WpMedia => {
  *
  * @param fromApi
  */
-export const wpAuthor = (fromApi: WpApiUser): PostAuthor => {
+export const authorFromWpApi = (fromApi: WpApiUser): PostAuthor => {
   return {
     name: fromApi.name,
     avatar: findAvatar(fromApi),
@@ -72,7 +82,7 @@ export const wpAuthor = (fromApi: WpApiUser): PostAuthor => {
  * @param fromApi
  * @param getters
  */
-const wpPost = (fromApi: WpApiPost, getters: getters): WpPost => {
+const wpPost = (fromApi: WpApiPost, getters: wpFactoryGetters): WpPost => {
   const { id, slug, content, title, excerpt } = fromApi;
 
   return {
@@ -81,15 +91,15 @@ const wpPost = (fromApi: WpApiPost, getters: getters): WpPost => {
     title,
     content,
     excerpt,
-    featured: wpFeatured(getters.featured(fromApi)),
-    author: wpAuthor(getters.author(fromApi)),
-    published: getters.published(fromApi),
-    tags: wpTags(getters.tags(fromApi)),
+    featured: featuredFromWpApi(getters.featured(fromApi.featured_media)),
+    author: authorFromWpApi(getters.author(fromApi.author)),
+    published: getters.published(fromApi.date),
+    tags: tagsFromWpApi(getters.tags(fromApi.tags ? fromApi.tags : [])),
   };
 };
 
 export default function(
-  getters: getters
+  getters: wpFactoryGetters
 ): {
   convertPost(fromApi: WpApiPost): WpPost;
 } {

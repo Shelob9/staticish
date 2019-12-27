@@ -2,14 +2,6 @@ import { PostAuthor, Image, tag } from './types';
 import { ContentObject } from '@staticish/wp-api-to-static';
 
 /**
- * Content like title, exceprt, content.
- *
- */
-export type renderableContent = {
-  rendered: string;
-};
-
-/**
  * A WordPress-like post.
  */
 export interface WpPost {
