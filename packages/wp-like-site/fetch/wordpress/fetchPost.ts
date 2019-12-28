@@ -13,6 +13,7 @@ export const fetchPost = async (
 	postType: string = "post"
 ): Promise<WpApiPost> => {
 	postType = "post" === postType ? "posts" : postType;
+	//@ts-ignore
 	return fetch(`${endpoint}/wp/v2/${postType}?slug=${slug}`)
 		.then(r => r.json())
 		.then((r: Array<WpApiPost>) => r[0]);
@@ -25,6 +26,7 @@ export const fetchPostsByAuthorId = async (
 	postType: string = "post"
 ): Promise<Array<WpApiPost>> => {
 	postType = "post" === postType ? "posts" : postType;
+	//@ts-ignore
 	return fetch(
 		`${endpoint}/wp/v2/${postType}?author=${authorId}&page=${page}`
 	).then(r => r.json());
@@ -42,6 +44,7 @@ export const fetchPosts = async (
 	postType: string = "post"
 ): Promise<Array<WpApiPost>> => {
 	postType = "post" === postType ? "posts" : postType;
+	//@ts-ignore
 	return fetch(`${endpoint}/wp/v2/${postType}?page=${page}`).then(r =>
 		r.json()
 	);

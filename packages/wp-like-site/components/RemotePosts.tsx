@@ -3,7 +3,7 @@ import getConfig from "next/config";
 
 import { BlogPostPreview } from "./wp-ui";
 import { WpPost } from "./wp-ui/wpTypes";
-import { fetchPosts } from "../fetch/wordpress";
+import { fetchPosts, collectPosts } from "../fetch/wordpress";
 import { getRemotePost, RemotePostProps } from "./RemotePost";
 import { WpApiPost } from "@staticish/wp-api-to-static";
 
@@ -19,20 +19,9 @@ export const getRemotePosts = async (
 ): Promise<RemotePostsProps> => {
 	return new Promise(async resolve => {
 		const _posts = await fetchPosts(endpoint, page, "post");
-		const posts: Array<WpPost> = [];
+		let posts: Array<WpPost> = [];
 		if (_posts.length) {
-			_posts.forEach(async (post: WpApiPost) => {
-				try {
-					const wpPost = await getRemotePost(post.slug, endpoint).then(
-						(r: RemotePostProps) => {
-							return r.wpLikePost;
-						}
-					);
-					posts.push(wpPost);
-				} catch {
-					(e: Error) => console.log(e);
-				}
-			});
+			posts = await collectPosts(_posts, endpoint);
 		}
 
 		resolve({ posts, endpoint, page });
