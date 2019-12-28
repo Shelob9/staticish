@@ -27,4 +27,12 @@ export const fetchUser = async (
 	return fetch(`${endpoint}/wp/v2/users/${userId}`).then(r => r.json());
 };
 
+export const fetchUserBySlug = (
+	endpoint: string,
+	slug: string
+): Promise<WpApiUser> => {
+	return fetch(`${endpoint}/wp/v2/users?slug=${slug}`)
+		.then(r => r.json())
+		.then(r => r[0]);
+};
 export const fetchAuthor = fetchUser;

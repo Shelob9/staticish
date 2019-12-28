@@ -18,6 +18,18 @@ export const fetchPost = async (
 		.then((r: Array<WpApiPost>) => r[0]);
 };
 
+export const fetchPostsByAuthorId = async (
+	endpoint: string,
+	authorId: number,
+	page: number = 1,
+	postType: string = "post"
+): Promise<Array<WpApiPost>> => {
+	postType = "post" === postType ? "posts" : postType;
+	return fetch(
+		`${endpoint}/wp/v2/${postType}?author=${authorId}&page=${page}`
+	).then(r => r.json());
+};
+
 /**
  * Fetch a page of posts from a WordPress site
  *

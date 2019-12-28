@@ -6,44 +6,20 @@ import PostContent, { renderPropForContent } from "./PostContent";
 import FeaturedImage, { renderFeaturedImage } from "./FeaturedImage";
 import PostHeader from "./PostHeader";
 import { PostAuthor, Image } from "./types";
-import { WpPost } from "./wpTypes";
-function AuthorProfile(props: { author: PostAuthor }) {
-	const { author } = props;
-	const { avatar, name, description, link } = author;
+import { WpPost, WpAuthor } from "./wpTypes";
+import Author from "./Author";
 
-	return (
-		<div className="flex w-full items-center font-sans px-4 py-12">
-			<img
-				className="w-10 h-10 rounded-full mr-4"
-				src={avatar.src}
-				alt={avatar.alt}
-			/>
-			<div className="flex-1 px-2">
-				<p className="text-base font-bold text-base md:text-xl leading-none mb-2">
-					{name}
-				</p>
-				{description && (
-					<p className="text-gray-600 text-xs md:text-base">{description}</p>
-				)}
-				{link && (
-					<p className="text-gray-600 text-xs md:text-base">
-						<a
-							className="text-teal-500 no-underline hover:underline"
-							href={link.href}
-						>
-							{link.text}
-						</a>
-					</p>
-				)}
-			</div>
-			<div className="justify-end">
-				<button className="bg-transparent border border-gray-500 hover:border-teal-500 text-xs text-gray-500 hover:text-teal-500 font-bold py-2 px-4 rounded-full">
-					Read More
-				</button>
-			</div>
-		</div>
-	);
-}
+//Copypasta!
+const addAuthorLink = (author: WpAuthor) => {
+	return {
+		...author,
+		link: {
+			href: `/authors/${author.slug}`,
+			text: `Read More`,
+			title: `All Posts By ${author.name}`
+		}
+	};
+};
 
 function PostTitle(props: { title: string }) {
 	return (
@@ -153,7 +129,7 @@ export default function(props: {
 						<PostTags tags={tags} />
 					</div>
 				)}
-				<AuthorProfile author={author} />
+				<Author author={addAuthorLink(author)} />
 			</Footer>
 		</Article>
 	);

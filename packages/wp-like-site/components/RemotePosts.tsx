@@ -39,17 +39,19 @@ export const getRemotePosts = async (
 	});
 };
 
-/**
- * Display remote posts
- *
- * @param props
- */
-const RemotePosts = (props: RemotePostsProps) => {
-	const [posts, setPosts] = React.useState<Array<WpPost>>(props.posts);
+export const DisplayRemotePosts = (props: {
+	fetchPosts: (page: number) => Promise<Array<WpApiPost>>;
+	page: number;
+	endpoint: string;
+	posts?: Array<WpPost>;
+}) => {
+	const [posts, setPosts] = React.useState<Array<WpPost>>(
+		props.posts ? props.posts : []
+	);
 
 	//Query for updated, assuming props was queried server-side and may be out of date
 	React.useEffect(() => {
-		fetchPosts(props.endpoint, props.page).then((r: Array<WpApiPost>) => {
+		props.fetchPosts(props.page).then((r: Array<WpApiPost>) => {
 			const promises: Array<Promise<WpPost>> = [];
 			r.map((post: WpApiPost) => {
 				promises.push(
@@ -61,7 +63,7 @@ const RemotePosts = (props: RemotePostsProps) => {
 			Promise.all(promises).then((r: Array<WpPost>) => setPosts(r));
 		});
 	}, [props.page, setPosts]);
-	const link = (post: WpPost) => `${props.endpoint}/posts/${post.slug}`;
+	const link = (post: WpPost) => `/posts/${post.slug}`;
 	return (
 		<Fragment>
 			{posts.map((post: WpPost) => (
@@ -70,6 +72,18 @@ const RemotePosts = (props: RemotePostsProps) => {
 		</Fragment>
 	);
 };
+
+/**
+ * Display remote posts
+ *
+ * @param props
+ */
+const RemotePosts = (props: RemotePostsProps) => (
+	<DisplayRemotePosts
+		{...props}
+		fetchPosts={(page: number) => fetchPosts(props.endpoint, page, "posts")}
+	/>
+);
 
 /**
  * Query server-side for remote post

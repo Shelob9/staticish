@@ -5,6 +5,7 @@ import PostExcerpt from "./PostExcerpt";
 import PostHeader from "./PostHeader";
 import { WpPost } from "./wpTypes";
 import { Image } from "./types";
+import Link from "next/link";
 
 /**
  * Show a preview of a post with zoomable featured image
@@ -41,9 +42,11 @@ export default function(props: { post: WpPost; tw?: string; link: string }) {
 					tw={"w-full text-gray-600 text-xs md:text-sm px-6"}
 				/>
 				<PostFooter post={post} />
-				<button className="max-w-lg mx-auto  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-					<a href={link}>Read More</a>
-				</button>
+				<Link href={link}>
+					<button className="max-w-lg mx-auto  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+						<a>Read More</a>
+					</button>
+				</Link>
 			</div>
 		</Article>
 	);

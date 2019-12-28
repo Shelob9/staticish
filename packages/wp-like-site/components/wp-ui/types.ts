@@ -30,4 +30,5 @@ export interface PostAuthor {
 	avatar: Image;
 	description?: string;
 	link?: link;
+	slug: string;
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { NextPageContext } from "next";
-import getConfig from "next/config";
 import RemotePost, { RemotePostProps } from "../../components/RemotePost";
 import "../../styles/index.css";
 
