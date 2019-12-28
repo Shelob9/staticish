@@ -7,6 +7,7 @@ import { fetchUsers } from "../fetch/wordpress";
 import getConfig from "next/config";
 import { WpApiUser } from "@staticish/wp-api-to-static";
 import { authorFromWpApi } from "../components/wp-ui/factories/wpFactory";
+import fetch from "isomorphic-unfetch";
 
 export const addAuthorLink = (author: WpAuthor) => {
 	return {
@@ -24,28 +25,33 @@ type Props = {
 	page: number;
 };
 const Authors = (props: Props) => {
+	const [authors, setAuthors] = React.useState<Array<WpAuthor>>(props.authors);
+	React.useEffect(() => {
+		fetch(`/api/authors?page=${props.page}`)
+			.then(r => r.json())
+			.then(r => {
+				setAuthors(r);
+			});
+	}, [props.page]);
 	return (
 		<Fragment>
-			{props.authors.map((author: WpAuthor) => (
+			{authors.map((author: WpAuthor) => (
 				<Author key={author.name} author={addAuthorLink(author)} />
 			))}
 		</Fragment>
 	);
 };
 
-const getRemoteAuthors = (endpoint: string, page: number = 1) => {
-	return fetchUsers(endpoint, page);
-};
 Authors.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
 	const { serverRuntimeConfig } = getConfig();
 	const { endpoint } = serverRuntimeConfig;
+
 	//@ts-ignore
 	const page = ctx.query.page ? (ctx.query.page as number) : 1;
-	const authors = await getRemoteAuthors(
-		endpoint,
-		page
-	).then((r: Array<WpApiUser>) => r.map((a: WpApiUser) => authorFromWpApi(a)));
-	return { endpoint, page, authors };
+	const authors = await fetch(
+		`http://localhost:3000/api/authors?page=${page}`
+	).then(r => r.json());
+	return { page, endpoint, authors };
 };
 
 export default Authors;
