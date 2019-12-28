@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getRemotePosts, RemotePostsProps } from "../../components/RemotePosts";
 import {
 	fetchPostsByAuthorId,
 	collectPosts,
