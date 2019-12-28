@@ -27,7 +27,7 @@ type Props = {
 const Authors = (props: Props) => {
 	const [authors, setAuthors] = React.useState<Array<WpAuthor>>(props.authors);
 	React.useEffect(() => {
-		fetch(`/api/authors?page=${props.page}`)
+		fetch(`${props.endpoint}/api/authors?page=${props.page}`)
 			.then(r => r.json())
 			.then(r => {
 				setAuthors(r);
@@ -43,11 +43,10 @@ const Authors = (props: Props) => {
 };
 
 Authors.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
-	const { serverRuntimeConfig } = getConfig();
-	const { endpoint } = serverRuntimeConfig;
-
 	//@ts-ignore
 	const page = ctx.query.page ? (ctx.query.page as number) : 1;
+	const endpoint = `http://localhost:3000/api/authors?page=${page}`;
+
 	const authors = await fetch(
 		`http://localhost:3000/api/authors?page=${page}`
 	).then(r => r.json());

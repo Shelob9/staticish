@@ -1,19 +1,42 @@
-import React from "react";
+import React, { Fragment } from "react";
 //import { getWpPost } from "@staticish/wp-api-to-static";
 import "../styles/index.css";
-import RemotePosts, { RemotePostsProps } from "../components/RemotePosts";
+import RemotePosts from "../components/RemotePosts";
 import { NextPageContext } from "next";
-const Posts = (props: RemotePostsProps) => <RemotePosts {...props} />;
+import { WpPost } from "../components/wp-ui/wpTypes";
+import { BlogPostPreview } from "../components/wp-ui";
+import fetch from "isomorphic-unfetch";
+type Props = {
+	posts: Array<WpPost>;
+	endpoint: string;
+	page: number;
+};
 
-Posts.getInitialProps = async (ctx: NextPageContext) => {
-	return RemotePosts.getInitialProps({
-		...ctx,
-		query: {
-			...ctx.query,
-			//@ts-ignore
-			page: ctx.query.page ? (ctx.query.page as number) : 1
-		}
-	});
+const Posts = (props: Props) => {
+	const [posts, setPosts] = React.useState<Array<WpPost>>(props.posts);
+	const link = (post: WpPost) => `/posts/${post.slug}`;
+	React.useEffect(() => {
+		fetch(`${props.endpoint}/api/posts?page=${props.page}`)
+			.then(r => r.json())
+			.then((r: Array<WpPost>) => setPosts(r));
+	}, [props.posts.length]);
+	return (
+		<Fragment>
+			{posts.map((post: WpPost) => (
+				<BlogPostPreview key={post.id} post={post} link={link(post)} />
+			))}
+		</Fragment>
+	);
+};
+
+Posts.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
+	//@ts-ignore
+	const page = ctx.query.page ? (ctx.query.page as number) : 1;
+	const endpoint = `http://localhost:3000`;
+	const posts = await fetch(`${endpoint}/api/posts?page=${page}`).then(r =>
+		r.json()
+	);
+	return { endpoint, page, posts };
 };
 
 export default Posts;
