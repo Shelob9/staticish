@@ -26,6 +26,7 @@ export type link = {
  * A post's author
  */
 export interface PostAuthor {
+	id: number;
 	name: string;
 	avatar: Image;
 	description?: string;

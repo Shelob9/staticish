@@ -138,9 +138,11 @@ describe("/api/authors handler", () => {
 
 		const res = new Response();
 		const authorsShouldBe = await fetchUser(1, endpoint);
+		const authorPosts = await fetchPostsByAuthorId(endpoint, 1);
 		await authorHandler(req, res);
 		expect(res.getStatusCode()).toBe(200);
-		expect(res.getTheJson().name).toBe(authorsShouldBe.name);
+		expect(res.getTheJson().author.name).toBe(authorsShouldBe.name);
+		expect(res.getTheJson().posts.length).toBe(authorPosts.length);
 	});
 	test("404 when GET by author", async () => {
 		let req = {};
@@ -154,5 +156,6 @@ describe("/api/authors handler", () => {
 		await authorHandler(req, res);
 		expect(res.getStatusCode()).toBe(404);
 		expect(res.getTheJson().hasOwnProperty("message")).toBe(true);
+		expect(res.getTheJson().posts.length).toBe(0);
 	});
 });

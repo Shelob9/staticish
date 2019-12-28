@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { NextPageContext } from "next";
-import RemotePost from "../../components/RemotePost";
 import "../../styles/index.css";
 import { WpPost } from "../../components/wp-ui/wpTypes";
 import { BlogPost } from "../../components/wp-ui";

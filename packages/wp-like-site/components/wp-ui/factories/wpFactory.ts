@@ -73,7 +73,8 @@ export const authorFromWpApi = (fromApi: WpApiUser): PostAuthor => {
 			href: fromApi.link,
 			text: fromApi.name
 		},
-		slug: fromApi.slug
+		slug: fromApi.slug,
+		id: fromApi.id
 	};
 };
 
