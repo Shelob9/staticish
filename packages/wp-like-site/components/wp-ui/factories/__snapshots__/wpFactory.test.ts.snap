@@ -13,6 +13,7 @@ Object {
       "text": "Josh Pollock",
     },
     "name": "Josh Pollock",
+    "slug": "josh",
   },
   "content": Object {
     "protected": false,
@@ -58,6 +59,7 @@ Object {
       "text": "Josh Pollock",
     },
     "name": "Josh Pollock",
+    "slug": "josh",
   },
   "content": Object {
     "protected": false,

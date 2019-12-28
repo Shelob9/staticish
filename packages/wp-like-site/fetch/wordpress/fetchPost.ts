@@ -2,7 +2,7 @@ import { WpApiPost } from "@staticish/wp-api-to-static";
 import fetch from "isomorphic-unfetch";
 
 /**
- * Fetch a post from a WordPress site
+ * Fetch a post from a WordPress site by slug
  *
  * @param slug
  * @param endpoint
@@ -17,6 +17,22 @@ export const fetchPost = async (
 	return fetch(`${endpoint}/wp/v2/${postType}?slug=${slug}`)
 		.then(r => r.json())
 		.then((r: Array<WpApiPost>) => r[0]);
+};
+
+/**
+ * Fetch a post from a WordPress site by ID
+ *
+ * @param slug
+ * @param endpoint
+ */
+export const fetchPostById = async (
+	id: number,
+	endpoint: string,
+	postType: string = "post"
+): Promise<WpApiPost> => {
+	postType = "post" === postType ? "posts" : postType;
+	//@ts-ignore
+	return fetch(`${endpoint}/wp/v2/${postType}/${id}`).then(r => r.json());
 };
 
 export const fetchPostsByAuthorId = async (

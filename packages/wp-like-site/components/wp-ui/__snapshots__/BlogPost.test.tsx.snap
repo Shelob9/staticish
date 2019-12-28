@@ -69,45 +69,34 @@ exports[`Blog post with factory It matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="flex w-full items-center font-sans px-4 py-12"
+        class="flex items-center bg-gray-300 pl-4 pr-4"
       >
         <img
           alt="Avatar for Josh Pollock"
           class="w-10 h-10 rounded-full mr-4"
           src="https://secure.gravatar.com/avatar/90f0d6d84cc52508796d039eb81c4f06?s=96&d=mm&r=g"
         />
-        <div
-          class="flex-1 px-2"
-        >
-          <p
-            class="text-base font-bold text-base md:text-xl leading-none mb-2"
+        <div>
+          <h3
+            class="text-gray-900"
           >
             Josh Pollock
-          </p>
+          </h3>
           <p
             class="text-gray-600 text-xs md:text-base"
           >
             Josh Pollock is VP of Engineering Experience at &lt;a href="https://saturdaydrive.io/"&gt;Saturday Drive&lt;/a&gt;. Previously, he was the founder of CalderaWP and the lead developer of Caldera Forms. He is also a WordPress core contributor and the author of two books about WordPress development.
           </p>
           <p
-            class="text-gray-600 text-xs md:text-base"
+            class="text-gray-900 "
           >
             <a
-              class="text-teal-500 no-underline hover:underline"
-              href="https://calderaforms.com/author/josh/"
+              href="/authors/josh"
+              title="All Posts By Josh Pollock"
             >
-              Josh Pollock
+              Read More
             </a>
           </p>
-        </div>
-        <div
-          class="justify-end"
-        >
-          <button
-            class="bg-transparent border border-gray-500 hover:border-teal-500 text-xs text-gray-500 hover:text-teal-500 font-bold py-2 px-4 rounded-full"
-          >
-            Read More
-          </button>
         </div>
       </div>
     </footer>

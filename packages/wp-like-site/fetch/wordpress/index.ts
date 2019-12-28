@@ -1,4 +1,9 @@
-export { fetchPost, fetchPosts, fetchPostsByAuthorId } from "./fetchPost";
+export {
+	fetchPost,
+	fetchPosts,
+	fetchPostsByAuthorId,
+	fetchPostById
+} from "./fetchPost";
 export {
 	fetchAuthor,
 	fetchUser,
