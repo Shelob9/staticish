@@ -1,9 +1,15 @@
 import postsHandler from "../pages/api/posts";
 import postHandler from "../pages/api/posts/[id]";
+import authorsHandler from "../pages/api/authors";
+import authorHandler from "../pages/api/authors/[id]";
+
 import {
 	fetchPostsByAuthorId,
 	fetchPosts,
-	fetchPostById
+	fetchPostById,
+	fetchUser,
+	fetchUsers,
+	fetchUserBySlug
 } from "../fetch/wordpress";
 const endpoint = "http://localhost:3100/wp-json";
 class Response {
@@ -81,11 +87,57 @@ describe("/api/posts handler", () => {
 		const post1 = await fetchPostById(1, endpoint);
 
 		const post = await fetchPostById(2, endpoint);
-		expect(post1.hasOwnProperty("code")).toBe(false);
 
+		//This is the logic the 404 vs 200 depends on internally
+		expect(post1.hasOwnProperty("code")).toBe(false);
 		expect(post.hasOwnProperty("code")).toBe(true);
 		const res = new Response();
 		await postHandler(req, res);
 		expect(res.getStatusCode()).toBe(404);
+	});
+});
+
+describe("/api/authors handler", () => {
+	test("GET authors", async () => {
+		let req = {};
+		req.cookies = {};
+		req.body = {};
+		req.query = {
+			page: 1
+		};
+
+		const res = new Response();
+		const authorsShouldBe = await fetchUsers(endpoint, 1);
+		await authorsHandler(req, res);
+		expect(res.getStatusCode()).toBe(200);
+		expect(res.getTheJson().length).toBe(authorsShouldBe.length);
+		expect(res.getTheJson()).toBe({});
+	});
+	test("GET author", async () => {
+		let req = {};
+		req.cookies = {};
+		req.body = {};
+		req.query = {
+			id: 1
+		};
+
+		const res = new Response();
+		const authorsShouldBe = await fetchUser(1, endpoint);
+		await authorHandler(req, res);
+		expect(res.getStatusCode()).toBe(200);
+		expect(res.getTheJson().name).toBe(authorsShouldBe.name);
+	});
+	test("404 when GET by author", async () => {
+		let req = {};
+		req.cookies = {};
+		req.body = {};
+		req.query = {
+			id: 90000
+		};
+
+		const res = new Response();
+		await authorHandler(req, res);
+		expect(res.getStatusCode()).toBe(404);
+		expect(res.getTheJson()).toBe({});
 	});
 });
