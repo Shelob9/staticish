@@ -1,6 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getRemotePosts, RemotePostsProps } from "../../components/RemotePosts";
-import { fetchPostsByAuthorId, collectPosts } from "../../fetch/wordpress";
+import {
+	fetchPostsByAuthorId,
+	collectPosts,
+	fetchPost,
+	fetchPosts
+} from "../../fetch/wordpress";
 import getConfig from "next/config";
 import { WpPost } from "../../components/wp-ui/wpTypes";
 import { WpApiPost } from "@staticish/wp-api-to-static";
@@ -18,20 +23,25 @@ export default async function(req: NextApiRequest, res: NextApiResponse) {
 	const authorId = req.query.author
 		? parseInt(req.query.author as string, 10)
 		: undefined;
+	const slug = req.query.slug ? req.query.slug : undefined;
 
 	const endpoint = getEndpoint();
 
 	let posts: Array<WpPost> = [];
 
-	if (authorId) {
+	if (slug) {
+		posts = await fetchPost(slug as string, endpoint).then((r: WpApiPost) =>
+			collectPosts([r], endpoint)
+		);
+	} else if (authorId) {
 		posts = await fetchPostsByAuthorId(
 			endpoint,
 			authorId,
 			page
 		).then((r: Array<WpApiPost>) => collectPosts(r, endpoint));
 	} else {
-		posts = await getRemotePosts(endpoint, page).then(
-			(r: RemotePostsProps) => r.posts
+		posts = await fetchPosts(endpoint, page).then((r: Array<WpApiPost>) =>
+			collectPosts(r, endpoint)
 		);
 	}
 

@@ -45,11 +45,11 @@ const Authors = (props: Props) => {
 Authors.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
 	//@ts-ignore
 	const page = ctx.query.page ? (ctx.query.page as number) : 1;
-	const endpoint = `http://localhost:3000/api/authors?page=${page}`;
+	const endpoint = `http://localhost:3000`;
 
-	const authors = await fetch(
-		`http://localhost:3000/api/authors?page=${page}`
-	).then(r => r.json());
+	const authors = await fetch(`${endpoint}/api/authors?page=${page}`).then(r =>
+		r.json()
+	);
 	return { page, endpoint, authors };
 };
 

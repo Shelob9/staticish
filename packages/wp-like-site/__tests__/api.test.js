@@ -48,6 +48,21 @@ describe("/api/posts handler", () => {
 		expect(res.getTheJson().length).toBe(postsShouldBe.length);
 	});
 
+	test("Gets a post by slug", async () => {
+		const post = await fetchPostById(endpoint, 1);
+		let req = {};
+		req.cookies = {};
+		req.body = {};
+		req.query = {
+			slug: post.slug
+		};
+		const res = new Response();
+		await postsHandler(req, res);
+		expect(res.getStatusCode()).toBe(200);
+		expect(res.getTheJson().length).toBe(1);
+		expect(res.getTheJson().title.rendered).toBe(post.title.rendered);
+	});
+
 	test("Query by author", async () => {
 		let req = {};
 		req.cookies = {};
