@@ -68,8 +68,8 @@ function mediaToFrontMatterObject(media: WpApiMedia): mediaFrontMatter {
     description: media.description.rendered,
     url: media.source_url,
     sizes:
-      media.media_detials && media.media_detials.sizes
-        ? media.media_detials.sizes
+      media.media_details && media.media_details.sizes
+        ? media.media_details.sizes
         : {},
     media_type: media.media_type,
     mime_type: media.mime_type,

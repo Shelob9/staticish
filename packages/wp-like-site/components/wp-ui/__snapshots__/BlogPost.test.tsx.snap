@@ -9,9 +9,11 @@ exports[`Blog post with factory It matches snapshot 1`] = `
       class="border-b-2 border-gray-400 mb-8 mx-4"
     />
     <img
-      alt="A cat"
+      alt="CF Show Pro UI"
       class="w-full"
-      src="http://placekitten.com/1280/640"
+      height="1673"
+      src="https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141.jpg"
+      width="2508"
     />
     <div
       class="w-full px-4 md:px-6 text-xl text-gray-800 leading-normal"
@@ -94,7 +96,7 @@ exports[`Blog post with factory It matches snapshot 1`] = `
               class="text-teal-500 no-underline hover:underline"
               href="https://calderaforms.com/author/josh/"
             >
-              nodejs
+              Josh Pollock
             </a>
           </p>
         </div>

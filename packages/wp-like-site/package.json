@@ -31,6 +31,7 @@
 		"@storybook/addon-notes": "^4.1.13",
 		"@storybook/addons": "^4.1.13",
 		"@storybook/react": "^4.1.13",
+		"@testing-library/react": "^9.4.0",
 		"@types/enzyme": "^3.1.18",
 		"@types/jest": "^24.0.6",
 		"@types/next": "^8.0.1",

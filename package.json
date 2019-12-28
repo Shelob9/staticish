@@ -15,7 +15,7 @@
 		"add:ui": "yarn workspace @staticish/post-ui add",
 		"add:static": "yarn workspace @staticish/wp-api-to-static add",
 		"add:site": "yarn workspace @staticish/wp-like-site add",
-		"start": "yarn lerna run --parallel start",
+		"start": "docker-compose up -d && yarn lerna run --parallel start",
 		"start:static": "yarn workspace @staticish/wp-api-to-static start",
 		"start:site": "yarn workspace @staticish/wp-like-site start",
 		"bootstrap": "lerna bootstrap",
