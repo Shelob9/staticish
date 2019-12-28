@@ -94,6 +94,7 @@ describe("/api/posts handler", () => {
 		const res = new Response();
 		await postHandler(req, res);
 		expect(res.getStatusCode()).toBe(404);
+		expect(res.getTheJson().hasOwnProperty("message")).toBe(true);
 	});
 });
 
@@ -111,7 +112,6 @@ describe("/api/authors handler", () => {
 		await authorsHandler(req, res);
 		expect(res.getStatusCode()).toBe(200);
 		expect(res.getTheJson().length).toBe(authorsShouldBe.length);
-		expect(res.getTheJson()).toBe({});
 	});
 	test("GET author", async () => {
 		let req = {};
@@ -138,6 +138,6 @@ describe("/api/authors handler", () => {
 		const res = new Response();
 		await authorHandler(req, res);
 		expect(res.getStatusCode()).toBe(404);
-		expect(res.getTheJson()).toBe({});
+		expect(res.getTheJson().hasOwnProperty("message")).toBe(true);
 	});
 });
